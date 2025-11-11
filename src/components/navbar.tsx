@@ -13,6 +13,7 @@ export const NavBar: React.FC = () => {
     const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
     const { isImperial, setIsImperial } = useGlobal();
     const dropdownDiv = useRef<HTMLDivElement>(null);
+    const dropMenu = useRef<HTMLDivElement>(null);
     const dropdownDisplayButton = useRef<HTMLDivElement>(null);
     const dropIcon = useRef<HTMLDivElement>(null);
 
@@ -32,15 +33,21 @@ export const NavBar: React.FC = () => {
         if (!dropdownVisible) {
             dropIcon.current?.classList.remove("rotate-0-animation");
             dropIcon.current?.classList.add("rotate-180-animation");
-            dropdownDiv.current?.classList.remove("animate-hide");
-            dropdownDiv.current?.classList.add("animate-show");
+            dropdownDiv.current?.classList.remove("animate-slide-up");
+            dropdownDiv.current?.classList.add("animate-slide-down");
+            dropMenu.current?.classList.remove("animate-hide");
+            dropMenu.current?.classList.add("animate-show");
             dropdownDiv.current?.classList.remove("hidden");
         } else {
             dropIcon.current?.classList.remove("rotate-180-animation");
             dropIcon.current?.classList.add("rotate-0-animation");
-            dropdownDiv.current?.classList.remove("animate-show");
-            dropdownDiv.current?.classList.add("animate-hide");
-            dropdownDiv.current?.classList.add("hidden");
+            dropdownDiv.current?.classList.remove("animate-slide-down");
+            dropdownDiv.current?.classList.add("animate-slide-up");
+            dropMenu.current?.classList.remove("animate-show");
+            dropMenu.current?.classList.add("animate-hide");
+            setTimeout(() => {
+                dropdownDiv.current?.classList.add("hidden");
+            }, 100);
         }
         setDropdownVisible(!dropdownVisible);
     }
@@ -60,7 +67,7 @@ export const NavBar: React.FC = () => {
                         </div>
                         <div className="drop-menu-container hidden" ref={dropdownDiv}>
                             <button className='unit-switch' onClick={changeUnit}>Switch to {targetUnit}</button>
-                            <div className="drop-menu">
+                            <div className="drop-menu" ref={dropMenu}>
                                 <div className="display-option-for-unit">
                                     <div className="display-temp-unit">
                                         <p>Temperature</p>

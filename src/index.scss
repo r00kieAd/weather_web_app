@@ -6,6 +6,8 @@ $mainBorderRadius: 5px;
 $mainMaxWidth: 70%;
 $navDropContainerWidth: 150px;
 $navDropButtonWidth: 85px;
+$navMenuDropdownFontSize: 14px;
+$navDropContainerHeight: 390px;
 
 $mainTransitionRule: all .1s ease-in;
 
@@ -90,20 +92,55 @@ body {
     }
 }
 
+@keyframes animateSlideDown {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: $navDropContainerHeight;
+    }
+}
+
+@keyframes animateSlideUp {
+    from {
+        height: $navDropContainerHeight;
+    }
+
+    to {
+        height: 0;
+    }
+}
+
 .rotate-180-animation {
-    animation: rotateForward 1s forwards;
+    animation: rotateForward 0.5s forwards;
 }
 
 .rotate-0-animation {
-    animation: rotateBackward 1s forwards;
+    animation: rotateBackward 0.5s forwards;
 }
 
 .animate-show {
-    animation: animateShowElement 1s forwards;
+    animation: animateShowElement 2s forwards;
 }
 
 .animate-hide {
-    animation: animateHideElement 1s forwards;
+    animation: animateHideElement .1s forwards;
+}
+
+.animate-slide-down {
+    height: 0;
+    animation: animateSlideDown .3s forwards;
+}
+
+.animate-slide-up {
+    height: $navDropContainerHeight;
+    animation: animateSlideUp .3s forwards;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
 }
 
 #app {
@@ -144,11 +181,6 @@ body {
                     }
                 }
 
-                .hidden {
-                    opacity: 0;
-                    visibility: hidden;
-                }
-
                 .drop-menu-container {
                     margin-top: 40px;
                     align-self: flex-start;
@@ -159,6 +191,7 @@ body {
                     border: 1px solid $secondayBackgroundColor;
                     border-radius: $mainBorderRadius;
                     transition: $mainTransitionRule;
+                    font-size: $navMenuDropdownFontSize;
 
                     button.unit-switch {
                         outline: none;
@@ -179,7 +212,7 @@ body {
 
                     .drop-menu {
                         position: relative;
-                        width: 95%;
+                        width: 100%;
 
                         .display-option-for-unit {
                             .unit-container {
@@ -190,7 +223,7 @@ body {
                                 line-height: 0;
                                 width: inherit;
                                 height: 20px;
-                                padding: 5px;
+                                padding: 5px 10px;
                                 align-items: center;
                                 border: 1px solid transparent;
                                 border-radius: $mainBorderRadius;
