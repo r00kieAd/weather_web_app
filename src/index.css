@@ -1,68 +1,166 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
+  background-color: hsl(243, 96%, 9%);
+  color: hsl(0, 0%, 100%);
+  padding: 0;
   margin: 0;
+}
+
+#errDiv {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#errDiv .errorContainer {
+  width: 100%;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#errDiv .errorContainer .errImg {
+  width: 250px;
+  height: auto;
+}
+#errDiv .errorContainer .errImg img {
+  width: inherit;
+  height: inherit;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+@keyframes rotateForward {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+@keyframes rotateBackward {
+  from {
+    transform: rotate(180deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+@keyframes animateShowElement {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+@keyframes animateHideElement {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+.rotate-180-animation {
+  animation: rotateForward 1s forwards;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.rotate-0-animation {
+  animation: rotateBackward 1s forwards;
+}
+
+.animate-show {
+  animation: animateShowElement 1s forwards;
+}
+
+.animate-hide {
+  animation: animateHideElement 1s forwards;
+}
+
+#app {
+  padding: 1%;
+}
+#app #navbarContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+#app #navbarContainer .navbar-components {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 70%;
+  max-width: 70%;
+  padding: 10px;
+}
+#app #navbarContainer .navbar-components .nav-menu-container {
+  position: relative;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 20px;
+}
+#app #navbarContainer .navbar-components .nav-menu-container .nav-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 85px;
   cursor: pointer;
-  transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
+#app #navbarContainer .navbar-components .nav-menu-container .nav-menu .drop-icon {
+  transition: all 0.1s ease-in;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+#app #navbarContainer .navbar-components .nav-menu-container .hidden {
+  opacity: 0;
+  visibility: hidden;
 }
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+#app #navbarContainer .navbar-components .nav-menu-container .drop-menu-container {
+  margin-top: 40px;
+  align-self: flex-start;
+  padding: 10px;
+  width: inherit;
+  position: absolute;
+  background-color: hsl(243, 27%, 20%);
+  border: 1px solid hsl(243, 27%, 20%);
+  border-radius: 5px;
+  transition: all 0.1s ease-in;
 }
+#app #navbarContainer .navbar-components .nav-menu-container .drop-menu-container button.unit-switch {
+  outline: none;
+  border: none;
+  background: transparent;
+  padding: 5px;
+  margin: 0;
+  color: hsl(0, 0%, 100%);
+  cursor: pointer;
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+#app #navbarContainer .navbar-components .nav-menu-container .drop-menu-container button.unit-switch:hover {
+  background-color: hsl(243, 23%, 24%);
+}
+#app #navbarContainer .navbar-components .nav-menu-container .drop-menu-container .drop-menu {
+  position: relative;
+  width: 95%;
+}
+#app #navbarContainer .navbar-components .nav-menu-container .drop-menu-container .drop-menu .display-option-for-unit .unit-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  line-height: 0;
+  width: inherit;
+  height: 20px;
+  padding: 5px;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+#app #navbarContainer .navbar-components .nav-menu-container .drop-menu-container .drop-menu .display-option-for-unit .unit-container.unit-checked {
+  background-color: hsl(243, 23%, 24%);
+}/*# sourceMappingURL=index.css.map */

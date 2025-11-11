@@ -1,0 +1,210 @@
+$mainBackgroundColor: hsl(243, 96%, 9%);
+$secondayBackgroundColor: hsl(243, 27%, 20%);
+$alternateBackroundColor: hsl(243, 23%, 24%);
+$mainFontColor: hsl(0, 0%, 100%);
+$mainBorderRadius: 5px;
+$mainMaxWidth: 70%;
+$navDropContainerWidth: 150px;
+$navDropButtonWidth: 85px;
+
+$mainTransitionRule: all .1s ease-in;
+
+body {
+    background-color: $mainBackgroundColor;
+    color: $mainFontColor;
+    padding: 0;
+    margin: 0;
+}
+
+@mixin centerElememt() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#errDiv {
+    @include centerElememt();
+
+    .errorContainer {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .errImg {
+            width: 250px;
+            height: auto;
+
+            img {
+                width: inherit;
+                height: inherit;
+            }
+        }
+    }
+}
+
+
+@keyframes rotateForward {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes rotateBackward {
+    from {
+        transform: rotate(180deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes animateShowElement {
+    from {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    to {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@keyframes animateHideElement {
+    from {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.rotate-180-animation {
+    animation: rotateForward 1s forwards;
+}
+
+.rotate-0-animation {
+    animation: rotateBackward 1s forwards;
+}
+
+.animate-show {
+    animation: animateShowElement 1s forwards;
+}
+
+.animate-hide {
+    animation: animateHideElement 1s forwards;
+}
+
+#app {
+    padding: 1%;
+
+    #navbarContainer {
+
+        position: relative;
+        display: flex;
+        justify-content: center;
+
+        .navbar-components {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: $mainMaxWidth;
+            max-width: $mainMaxWidth;
+            padding: 10px;
+
+            .nav-menu-container {
+                position: relative;
+                width: $navDropContainerWidth;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                padding-right: 20px;
+
+                .nav-menu {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    width: $navDropButtonWidth;
+                    cursor: pointer;
+
+                    .drop-icon {
+                        transition: $mainTransitionRule;
+                    }
+                }
+
+                .hidden {
+                    opacity: 0;
+                    visibility: hidden;
+                }
+
+                .drop-menu-container {
+                    margin-top: 40px;
+                    align-self: flex-start;
+                    padding: 10px;
+                    width: inherit;
+                    position: absolute;
+                    background-color: $secondayBackgroundColor;
+                    border: 1px solid $secondayBackgroundColor;
+                    border-radius: $mainBorderRadius;
+                    transition: $mainTransitionRule;
+
+                    button.unit-switch {
+                        outline: none;
+                        border: none;
+                        background: transparent;
+                        padding: 5px;
+                        margin: 0;
+                        color: $mainFontColor;
+                        cursor: pointer;
+                        width: 100%;
+                        border: 1px solid transparent;
+                        border-radius: $mainBorderRadius;
+                    }
+
+                    button.unit-switch:hover {
+                        background-color: $alternateBackroundColor;
+                    }
+
+                    .drop-menu {
+                        position: relative;
+                        width: 95%;
+
+                        .display-option-for-unit {
+                            .unit-container {
+                                position: relative;
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: space-between;
+                                line-height: 0;
+                                width: inherit;
+                                height: 20px;
+                                padding: 5px;
+                                align-items: center;
+                                border: 1px solid transparent;
+                                border-radius: $mainBorderRadius;
+
+                                &.unit-checked {
+                                    background-color: $alternateBackroundColor;
+                                }
+                            }
+
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
