@@ -68,15 +68,23 @@ body {
     height: 0;
   }
   to {
-    height: 390px;
+    height: 380px;
   }
 }
 @keyframes animateSlideUp {
   from {
-    height: 390px;
+    height: 380px;
   }
   to {
     height: 0;
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 .rotate-180-animation {
@@ -101,7 +109,7 @@ body {
 }
 
 .animate-slide-up {
-  height: 390px;
+  height: 380px;
   animation: animateSlideUp 0.3s forwards;
 }
 
@@ -111,23 +119,50 @@ body {
 }
 
 #app {
+  position: relative;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  padding: 0;
+  width: 70%;
+  max-width: 70%;
+  height: 100vh;
+}
+@media screen and (max-width: 1200px) {
+  #app {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0 1%;
+  }
+}
+#app #appComponents {
+  position: relative;
+  width: 100%;
+  height: 100%;
   padding: 1%;
 }
-#app #navbarContainer {
+#app #appComponents .compartment-1 {
+  width: inherit;
+  height: inherit;
+}
+#app #appComponents .compartment-1 #navbarContainer {
   position: relative;
   display: flex;
   justify-content: center;
+  width: inherit;
 }
-#app #navbarContainer .navbar-components {
+#app #appComponents .compartment-1 #navbarContainer .navbar-components {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 70%;
-  max-width: 70%;
+  width: inherit;
+  max-width: inherit;
   padding: 10px;
 }
-#app #navbarContainer .navbar-components .nav-menu-container {
+#app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container {
   position: relative;
   width: 150px;
   display: flex;
@@ -135,17 +170,17 @@ body {
   align-items: flex-end;
   padding-right: 20px;
 }
-#app #navbarContainer .navbar-components .nav-menu-container .nav-menu {
+#app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .nav-menu {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 85px;
   cursor: pointer;
 }
-#app #navbarContainer .navbar-components .nav-menu-container .nav-menu .drop-icon {
+#app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .nav-menu .drop-icon {
   transition: all 0.1s ease-in;
 }
-#app #navbarContainer .navbar-components .nav-menu-container .drop-menu-container {
+#app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .drop-menu-container {
   margin-top: 40px;
   align-self: flex-start;
   padding: 10px;
@@ -156,8 +191,9 @@ body {
   border-radius: 5px;
   transition: all 0.1s ease-in;
   font-size: 14px;
+  z-index: 100;
 }
-#app #navbarContainer .navbar-components .nav-menu-container .drop-menu-container button.unit-switch {
+#app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .drop-menu-container button.unit-switch {
   outline: none;
   border: none;
   background: transparent;
@@ -169,14 +205,17 @@ body {
   border: 1px solid transparent;
   border-radius: 5px;
 }
-#app #navbarContainer .navbar-components .nav-menu-container .drop-menu-container button.unit-switch:hover {
+#app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .drop-menu-container button.unit-switch:hover {
   background-color: hsl(243, 23%, 24%);
 }
-#app #navbarContainer .navbar-components .nav-menu-container .drop-menu-container .drop-menu {
+#app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .drop-menu-container .drop-menu {
   position: relative;
   width: 100%;
 }
-#app #navbarContainer .navbar-components .nav-menu-container .drop-menu-container .drop-menu .display-option-for-unit .unit-container {
+#app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .drop-menu-container .drop-menu .display-option-for-unit .display-unit .unit-type {
+  font-size: 13.5px;
+}
+#app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .drop-menu-container .drop-menu .display-option-for-unit .display-unit .unit-container {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -189,6 +228,38 @@ body {
   border: 1px solid transparent;
   border-radius: 5px;
 }
-#app #navbarContainer .navbar-components .nav-menu-container .drop-menu-container .drop-menu .display-option-for-unit .unit-container.unit-checked {
+#app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .drop-menu-container .drop-menu .display-option-for-unit .display-unit .unit-container.unit-checked {
   background-color: hsl(243, 23%, 24%);
+  transition: all 0.1s ease-in;
+  visibility: visible;
+  opacity: 1;
+  height: 20px;
+}
+#app #appComponents .compartment-1 #searchContainer {
+  position: relative;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  width: inherit;
+  display: flex;
+  padding: 1% 0;
+}
+#app #appComponents .compartment-1 #searchContainer .search-container-parent {
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+#app #appComponents .compartment-1 #searchContainer .search-container-parent .heading-container {
+  text-align: center;
+  width: 100%;
+}
+#app #appComponents .compartment-1 #searchContainer .search-container-parent .heading-container #heading {
+  font-size: 32px;
+  font-weight: 300;
+  margin: 0;
+  letter-spacing: 0.5px;
 }/*# sourceMappingURL=index.css.map */

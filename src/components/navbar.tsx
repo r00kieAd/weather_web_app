@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import logo from '../assets/logo.svg'
 import gear from '../assets/icon-units.svg'
 import drop_icon from '../assets/icon-dropdown.svg'
@@ -69,8 +69,8 @@ export const NavBar: React.FC = () => {
                             <button className='unit-switch' onClick={changeUnit}>Switch to {targetUnit}</button>
                             <div className="drop-menu" ref={dropMenu}>
                                 <div className="display-option-for-unit">
-                                    <div className="display-temp-unit">
-                                        <p>Temperature</p>
+                                    <div className="display-unit display-temp-unit">
+                                        <p className='unit-type'>Temperature</p>
                                         <div className={`unit-container temp-unit-a temp-unit${!isImperial ? ' unit-checked' : ''}`}>
                                             <p className='unit-name'>Celsius (°C)</p>
                                             <p className='unit-checkmark unit-checkmark-a'>
@@ -85,8 +85,8 @@ export const NavBar: React.FC = () => {
                                         </div>
                                         <br />
                                     </div>
-                                    <div className="display-wind-unit">
-                                        <p>Wind</p>
+                                    <div className="display-unit display-wind-unit">
+                                        <p className='unit-type'>Wind</p>
                                         <div className={`unit-container wind-unit-a wind-unit${!isImperial ? ' unit-checked' : ''}`}>
                                             <p className='unit-name'>km/h</p>
                                             <p className='unit-checkmark unit-checkmark-a'>
@@ -101,8 +101,8 @@ export const NavBar: React.FC = () => {
                                         </div>
                                         <br />
                                     </div>
-                                    <div className="display-precipitation-unit">
-                                        <p>Precipitation</p>
+                                    <div className="display-unit display-precipitation-unit">
+                                        <p className='unit-type'>Precipitation</p>
                                         <div className={`unit-container precipitation-unit-a precipitation-unit${!isImperial ? ' unit-checked' : ''}`}>
                                             <p className='unit-name'>Millimeters (mm)</p>
                                             <p className='unit-checkmark unit-checkmark-a'>

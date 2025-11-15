@@ -20,11 +20,21 @@ interface GlobalState {
     setWind: (value: number) => null;
     precipitation: number;
     setPrecipitation: (value: number) => null;
+    locationId: number;
+    setLocationId: (value: number) => null;
+    locationName: string;
+    setLocationName: (value: string) => null;
+    locationLattitude: number;
+    setLocationLattitude: (value: number) => null;
+    locationLongitude: number;
+    setLocationLongitude: (value: number) => null;
+    locationTimezone: string;
+    setLocationTimezone: (value: string) => null;
 }
 
 const GlobalContext = createContext<GlobalState | undefined>(undefined);
 
-export function GlobalProvider({children}: {children: ReactNode}) {
+export function GlobalProvider({ children }: { children: ReactNode }) {
     const [isImperial, setIsImperial] = useState<boolean>(false);
     const [displayedLocation, setDisplayedLocation] = useState<string>("");
     const [displayedDay, setDisplayedDay] = useState<string>("");
@@ -34,6 +44,10 @@ export function GlobalProvider({children}: {children: ReactNode}) {
     const [humidity, setHumidity] = useState<string>("");
     const [wind, setWind] = useState<number>(0);
     const [precipitation, setPrecipitation] = useState<number>(0);
+    const [locationId, setLocationId] = useState<number>(0);
+    const [locationName, setLocationName] = useState<number>(0);
+    const [locationLattitude, setLocationLattitude] = useState<number>(0);
+    const [locationLongitude, setLocationLongitude] = useState<number>(0);
 
     return (
         <GlobalContext.Provider value={{
@@ -55,6 +69,14 @@ export function GlobalProvider({children}: {children: ReactNode}) {
             setWind,
             precipitation,
             setPrecipitation,
+            locationId,
+            setLocationId,
+            locationName,
+            setLocationName,
+            locationLattitude,
+            setLocationLattitude,
+            locationLongitude,
+            setLocationLongitude
         } as unknown as GlobalState}>
             {children}
         </GlobalContext.Provider>

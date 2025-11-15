@@ -1,13 +1,16 @@
 $mainBackgroundColor: hsl(243, 96%, 9%);
 $secondayBackgroundColor: hsl(243, 27%, 20%);
 $alternateBackroundColor: hsl(243, 23%, 24%);
+$mainButtonBg: hsl(233, 67%, 56%);
 $mainFontColor: hsl(0, 0%, 100%);
 $mainBorderRadius: 5px;
 $mainMaxWidth: 70%;
+$mainMaxWidthLimit: 1200px;
 $navDropContainerWidth: 150px;
 $navDropButtonWidth: 85px;
 $navMenuDropdownFontSize: 14px;
-$navDropContainerHeight: 390px;
+$navDropContainerHeight: 380px;
+$unitContainerHeight: 20px;
 
 $mainTransitionRule: all .1s ease-in;
 
@@ -23,6 +26,12 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+@mixin centerElementHorizontaly() {
+    margin: 0 auto;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 #errDiv {
@@ -112,6 +121,16 @@ body {
     }
 }
 
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .rotate-180-animation {
     animation: rotateForward 0.5s forwards;
 }
@@ -144,100 +163,169 @@ body {
 }
 
 #app {
-    padding: 1%;
+    position: relative;
+    @include centerElementHorizontaly();
+    padding: 0;
+    width: $mainMaxWidth;
+    max-width: $mainMaxWidth;
+    height: 100vh;
 
-    #navbarContainer {
+    @media screen and (max-width: $mainMaxWidthLimit) {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0 1%;
+    }
+
+    #appComponents {
 
         position: relative;
-        display: flex;
-        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 1%;
 
-        .navbar-components {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            width: $mainMaxWidth;
-            max-width: $mainMaxWidth;
-            padding: 10px;
+        .compartment-1 {
+            width: inherit;
+            height: inherit;
 
-            .nav-menu-container {
+            #navbarContainer {
+
                 position: relative;
-                width: $navDropContainerWidth;
                 display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-                padding-right: 20px;
+                justify-content: center;
+                width: inherit;
 
-                .nav-menu {
+                .navbar-components {
+                    position: relative;
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
-                    width: $navDropButtonWidth;
-                    cursor: pointer;
-
-                    .drop-icon {
-                        transition: $mainTransitionRule;
-                    }
-                }
-
-                .drop-menu-container {
-                    margin-top: 40px;
-                    align-self: flex-start;
-                    padding: 10px;
+                    align-items: center;
                     width: inherit;
-                    position: absolute;
-                    background-color: $secondayBackgroundColor;
-                    border: 1px solid $secondayBackgroundColor;
-                    border-radius: $mainBorderRadius;
-                    transition: $mainTransitionRule;
-                    font-size: $navMenuDropdownFontSize;
+                    max-width: inherit;
+                    padding: 10px;
 
-                    button.unit-switch {
-                        outline: none;
-                        border: none;
-                        background: transparent;
-                        padding: 5px;
-                        margin: 0;
-                        color: $mainFontColor;
-                        cursor: pointer;
-                        width: 100%;
-                        border: 1px solid transparent;
-                        border-radius: $mainBorderRadius;
-                    }
-
-                    button.unit-switch:hover {
-                        background-color: $alternateBackroundColor;
-                    }
-
-                    .drop-menu {
+                    .nav-menu-container {
                         position: relative;
-                        width: 100%;
+                        width: $navDropContainerWidth;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-end;
+                        padding-right: 20px;
 
-                        .display-option-for-unit {
-                            .unit-container {
-                                position: relative;
-                                display: flex;
-                                flex-direction: row;
-                                justify-content: space-between;
-                                line-height: 0;
-                                width: inherit;
-                                height: 20px;
-                                padding: 5px 10px;
-                                align-items: center;
+                        .nav-menu {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+                            width: $navDropButtonWidth;
+                            cursor: pointer;
+
+                            .drop-icon {
+                                transition: $mainTransitionRule;
+                            }
+                        }
+
+                        .drop-menu-container {
+                            margin-top: 40px;
+                            align-self: flex-start;
+                            padding: 10px;
+                            width: inherit;
+                            position: absolute;
+                            background-color: $secondayBackgroundColor;
+                            border: 1px solid $secondayBackgroundColor;
+                            border-radius: $mainBorderRadius;
+                            transition: $mainTransitionRule;
+                            font-size: $navMenuDropdownFontSize;
+                            z-index: 100;
+
+                            button.unit-switch {
+                                outline: none;
+                                border: none;
+                                background: transparent;
+                                padding: 5px;
+                                margin: 0;
+                                color: $mainFontColor;
+                                cursor: pointer;
+                                width: 100%;
                                 border: 1px solid transparent;
                                 border-radius: $mainBorderRadius;
-
-                                &.unit-checked {
-                                    background-color: $alternateBackroundColor;
-                                }
                             }
 
+                            button.unit-switch:hover {
+                                background-color: $alternateBackroundColor;
+                            }
 
+                            .drop-menu {
+                                position: relative;
+                                width: 100%;
+
+                                .display-option-for-unit {
+
+                                    .display-unit {
+                                        .unit-type {
+                                            font-size: 13.5px;
+                                        }
+
+                                        .unit-container {
+                                            position: relative;
+                                            display: flex;
+                                            flex-direction: row;
+                                            justify-content: space-between;
+                                            line-height: 0;
+                                            width: inherit;
+                                            height: $unitContainerHeight;
+                                            padding: 5px 10px;
+                                            align-items: center;
+                                            border: 1px solid transparent;
+                                            border-radius: $mainBorderRadius;
+
+                                            &.unit-checked {
+                                                background-color: $alternateBackroundColor;
+                                                transition: $mainTransitionRule;
+                                                visibility: visible;
+                                                opacity: 1;
+                                                height: $unitContainerHeight;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
+
+            #searchContainer {
+                position: relative;
+                @include centerElementHorizontaly();
+                width: inherit;
+                display: flex;
+                padding: 1% 0;
+                
+
+                .search-container-parent {
+                    @include centerElementHorizontaly();
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+
+                    .heading-container {
+                        text-align: center;
+                        width: 100%;
+
+                        #heading {
+                            font-size: 32px;
+                            font-weight: 300;
+                            margin: 0;
+                            letter-spacing: 0.5px;
+                        }
+                    }
+
+                    
+                }
+            }
         }
+
     }
 }
