@@ -1,0 +1,5 @@
+{
+    "BASE_URI": "https://geocoding-api.open-meteo.com",
+    "VERSION": "v1",
+    "SEARCH": "search"
+}
