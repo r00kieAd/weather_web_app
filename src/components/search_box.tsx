@@ -3,7 +3,8 @@ import { useGlobal } from '../utils/global_context'
 import iconSearch from '../assets/icon-search.svg'
 import iconLoading from '../assets/icon-loading.svg'
 import initiateSearch from '../services/location_fetcher'
-import location_pin from '../assets/location-pin.svg';
+import location_pin from '../assets/location-pin.svg'
+import SplitText from './split'
 
 type Place = {
     id: number
@@ -19,7 +20,7 @@ type SearchBoxProps = {
 
 export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
     const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude } = useGlobal()
-    
+
     const [query, setQuery] = useState('')
     const [suggestions, setSuggestions] = useState<Place[]>([])
     const [loading, setLoading] = useState(false)
@@ -87,7 +88,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
 
         // Clear previous timer
         if (debounceRef.current) window.clearTimeout(debounceRef.current)
-        
+
         // Show loading state immediately
         setLoading(true)
         setShowSuggestions(true)
@@ -95,7 +96,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
         debounceRef.current = window.setTimeout(async () => {
             try {
                 const result = await initiateSearch({ name: query, count: 5 })
-                
+
                 if (result.status && result.resp && result.resp.results) {
                     const places: Place[] = result.resp.results.map((item: any) => ({
                         id: item.id,
@@ -124,14 +125,14 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
         setSuggestions([])
         setHighlight(-1)
         setQuery('')
-        
+
         // Set global context
         setLocationId(place.id)
         setLocationName(place.name)
         setLocationCountry(place.country)
         setLocationLattitude(place.latitude)
         setLocationLongitude(place.longitude)
-        
+
         if (onSearch) onSearch(place)
     }
 
@@ -141,7 +142,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
 
     const onFormSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        
+
         if (!query.trim()) return
 
         // if a suggestion is highlighted, use it
@@ -149,7 +150,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
             onSelectSuggestion(suggestions[highlight])
             return
         }
-        
+
         // otherwise, trigger search without selection
         // in this case we submit the raw query - you may want to fetch here
     }
@@ -189,12 +190,29 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
         }
     }
 
+    const handleAnimationComplete = () => {
+        console.log('Component Initialized..');
+    };
+
     return (
         <>
             <div id="searchContainer">
                 <div className="search-container-parent">
                     <div className="heading-container">
-                        <h1 id="heading" className='bricolage-grotesque-700'>How's the sky looking today?</h1>
+                        <h1 id="heading" className='bricolage-grotesque-700'>
+                            {(<SplitText
+                                text="How's the sky looking today?"
+                                className="text-2xl font-semibold text-center"
+                                delay={80}
+                                duration={0.5}
+                                ease="power3.out"
+                                splitType="chars"
+                                from={{ opacity: 0, y: 40 }}
+                                to={{ opacity: 1, y: 0 }}
+                                textAlign="center"
+                                onLetterAnimationComplete={handleAnimationComplete}
+                            />)}
+                        </h1>
                     </div>
                     <div className="search-box-container">
                         <form onSubmit={onFormSubmit} className="search-form" role="search">
@@ -214,8 +232,8 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
                                     className="search-input dm-sans-300"
                                     autoComplete="off"
                                 />
-                                
-                                { showSuggestions && loading && (
+
+                                {showSuggestions && loading && (
                                     <div className="loading-dropdown" style={dropdownStyle}>
                                         <div className="loading-item dm-sans-300">
                                             <img src={iconLoading} alt="Loading" className="loading-icon" />
@@ -223,7 +241,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
                                         </div>
                                     </div>
                                 )}
-                                
+
                                 {showSuggestions && !loading && suggestions.length > 0 && (
                                     <ul
                                         role="listbox"
