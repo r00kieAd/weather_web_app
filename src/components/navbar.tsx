@@ -6,7 +6,6 @@ import checkmark from '../assets/icon-checkmark.svg'
 import temp from '../assets/fire-trend-hot.svg'
 import drops from '../assets/droplets-rain-weather.svg'
 import winds from '../assets/wind-weather.svg'
-import switch_icon from '../assets/switch.svg'
 import DEFAULTS from '../config/defaults.json'
 import { useGlobal } from '../utils/global_context'
 
