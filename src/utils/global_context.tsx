@@ -24,6 +24,8 @@ interface GlobalState {
     setLocationId: (value: number) => null;
     locationName: string;
     setLocationName: (value: string) => null;
+    locationCountry: string;
+    setLocationCountry: (value: string) => null;
     locationLattitude: number;
     setLocationLattitude: (value: number) => null;
     locationLongitude: number;
@@ -45,7 +47,9 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
     const [wind, setWind] = useState<number>(0);
     const [precipitation, setPrecipitation] = useState<number>(0);
     const [locationId, setLocationId] = useState<number>(0);
-    const [locationName, setLocationName] = useState<number>(0);
+    const [locationName, setLocationName] = useState<string>("");
+    const [locationCountry, setLocationCountry] = useState<string>("");
+    const [locationTimezone, setLocationTimezone] = useState<string>("");
     const [locationLattitude, setLocationLattitude] = useState<number>(0);
     const [locationLongitude, setLocationLongitude] = useState<number>(0);
 
@@ -73,10 +77,14 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
             setLocationId,
             locationName,
             setLocationName,
+            locationCountry,
+            setLocationCountry,
             locationLattitude,
             setLocationLattitude,
             locationLongitude,
-            setLocationLongitude
+            setLocationLongitude,
+            locationTimezone,
+            setLocationTimezone
         } as unknown as GlobalState}>
             {children}
         </GlobalContext.Provider>
