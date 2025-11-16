@@ -4,22 +4,77 @@ $mainHoverColor: hsl(248, 70%, 36%);
 $alternateBackroundColor: hsl(243, 23%, 24%);
 $mainButtonBg: hsl(233, 67%, 56%);
 $mainFontColor: hsl(0, 0%, 100%);
+$alternateFontColor: hsl(240, 6%, 70%);
 $mainBorderRadius: 5px;
-$mainMaxWidth: 70%;
+$mainMaxWidth: 70rem;
 $mainMaxWidthLimit: 1200px;
+$mainMinWidthLimit: 1400px;
+$mobileMaxWidthLimit: 700px;
 $navDropContainerWidth: 150px;
 $navDropButtonWidth: 85px;
 $navMenuDropdownFontSize: 14px;
 $navDropContainerHeight: 380px;
 $unitContainerHeight: 20px;
-
+$mainFontSize: 18px;
+$mainHeaderFontSize: clamp(28px, 10vw, 36px);
 $mainTransitionRule: all .1s ease-in;
+
+.dm-sans-300 {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.dm-sans-500 {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.dm-sans-600 {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.dm-sans-600i {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.dm-sans-700 {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.bricolage-grotesque-700 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100;
+}
 
 body {
     background-color: $mainBackgroundColor;
     color: $mainFontColor;
     padding: 0;
     margin: 0;
+}
+
+@mixin disableTextHighlight() {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 @mixin centerElememt() {
@@ -175,7 +230,12 @@ body {
         width: 100%;
         max-width: 100%;
         margin: 0;
-        padding: 0 1%;
+        padding: 0 1.5%;
+    }
+
+    @media screen and (min-width: $mainMinWidthLimit) {
+        width: 80rem;
+        max-width: 80rem;
     }
 
     #appComponents {
@@ -195,6 +255,7 @@ body {
                 display: flex;
                 justify-content: center;
                 width: inherit;
+                @include disableTextHighlight();
 
                 .navbar-components {
                     position: relative;
@@ -206,29 +267,54 @@ body {
                     max-width: inherit;
                     padding: 10px;
 
+                    .nav-logo {
+                        height: auto;
+
+                        img {
+                            width: 200px;
+                            height: 40px;
+
+                            @media screen and (max-width: $mobileMaxWidthLimit) {
+                                width: 150px;
+                            }
+                        }
+                    }
+
                     .nav-menu-container {
                         position: relative;
                         width: $navDropContainerWidth;
                         display: flex;
                         flex-direction: column;
                         align-items: flex-end;
-                        padding-right: 20px;
+                        padding-right: 1px;
 
                         .nav-menu {
                             display: flex;
                             flex-direction: row;
                             justify-content: space-between;
+                            align-items: center;
                             width: $navDropButtonWidth;
                             cursor: pointer;
+                            padding: 5px 10px;
+                            border: 0.1px solid transparent;
+                            border-radius: $mainBorderRadius;
+
+                            .menu-icon {
+                                margin-top: 4px;
+                            }
 
                             .drop-icon {
                                 transition: $mainTransitionRule;
+                            }
+
+                            &:hover {
+                                background-color: $alternateBackroundColor;
                             }
                         }
 
                         .drop-menu-container {
                             margin-top: 40px;
-                            align-self: flex-start;
+                            // align-self: flex-start;
                             padding: 10px;
                             width: inherit;
                             position: absolute;
@@ -250,10 +336,12 @@ body {
                                 width: 100%;
                                 border: 1px solid transparent;
                                 border-radius: $mainBorderRadius;
+                                transition: $mainTransitionRule;
                             }
 
                             button.unit-switch:hover {
                                 background-color: $alternateBackroundColor;
+                                font-weight: 700;
                             }
 
                             .drop-menu {
@@ -264,7 +352,10 @@ body {
 
                                     .display-unit {
                                         .unit-type {
-                                            font-size: 13.5px;
+                                            font-size: 12px;
+                                            display: flex;
+                                            gap: 5px;
+                                            color: $alternateFontColor;
                                         }
 
                                         .unit-container {
@@ -302,7 +393,7 @@ body {
                 width: inherit;
                 display: flex;
                 padding: 1% 0;
-                
+
 
                 .search-container-parent {
                     @include centerElementHorizontaly();
@@ -311,14 +402,18 @@ body {
                     flex-direction: column;
                     gap: 20px;
 
+                    @media screen and (max-width: 1180px) {
+                        padding: 0 10px;
+                    }
+
                     .heading-container {
                         text-align: center;
                         width: 100%;
 
                         #heading {
-                            font-size: 32px;
+                            font-size: $mainHeaderFontSize;
                             font-weight: 300;
-                            margin: 0;
+                            margin: 10px auto;
                             letter-spacing: 0.5px;
                         }
                     }
@@ -379,7 +474,7 @@ body {
                                     border: 1px solid rgba($mainFontColor, 0.2);
                                     border-radius: $mainBorderRadius;
                                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-                                    
+                                    box-sizing: border-box;
 
                                     .loading-item {
                                         display: flex;
@@ -406,6 +501,7 @@ body {
                                     max-height: 250px;
                                     overflow-y: auto;
                                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+                                    box-sizing: border-box;
 
                                     .suggestion-item {
                                         padding: 12px 16px;
@@ -438,6 +534,16 @@ body {
                                 white-space: nowrap;
                                 outline: none;
                                 flex-shrink: 0;
+
+                                @media screen and (max-width: $mobileMaxWidthLimit) {
+                                    padding: 6px 16px;
+                                    height: 45px;
+
+                                    img {
+                                        width: 100%;
+                                        margin-top: 4px;
+                                    }
+                                }
 
                                 &:hover:not(:disabled) {
                                     // opacity: 0.9;

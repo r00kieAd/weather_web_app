@@ -1,3 +1,46 @@
+.dm-sans-300 {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.dm-sans-500 {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.dm-sans-600 {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.dm-sans-600i {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.dm-sans-700 {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.bricolage-grotesque-700 {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
 body {
   background-color: hsl(243, 96%, 9%);
   color: hsl(0, 0%, 100%);
@@ -124,8 +167,8 @@ body {
   box-sizing: border-box;
   overflow-x: hidden;
   padding: 0;
-  width: 70%;
-  max-width: 70%;
+  width: 70rem;
+  max-width: 70rem;
   height: 100vh;
 }
 @media screen and (max-width: 1200px) {
@@ -133,7 +176,13 @@ body {
     width: 100%;
     max-width: 100%;
     margin: 0;
-    padding: 0 1%;
+    padding: 0 1.5%;
+  }
+}
+@media screen and (min-width: 1400px) {
+  #app {
+    width: 80rem;
+    max-width: 80rem;
   }
 }
 #app #appComponents {
@@ -151,6 +200,10 @@ body {
   display: flex;
   justify-content: center;
   width: inherit;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 #app #appComponents .compartment-1 #navbarContainer .navbar-components {
   position: relative;
@@ -162,27 +215,48 @@ body {
   max-width: inherit;
   padding: 10px;
 }
+#app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-logo {
+  height: auto;
+}
+#app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-logo img {
+  width: 200px;
+  height: 40px;
+}
+@media screen and (max-width: 700px) {
+  #app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-logo img {
+    width: 150px;
+  }
+}
 #app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container {
   position: relative;
   width: 150px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  padding-right: 20px;
+  padding-right: 1px;
 }
 #app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .nav-menu {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 85px;
   cursor: pointer;
+  padding: 5px 10px;
+  border: 0.1px solid transparent;
+  border-radius: 5px;
+}
+#app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .nav-menu .menu-icon {
+  margin-top: 4px;
 }
 #app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .nav-menu .drop-icon {
   transition: all 0.1s ease-in;
 }
+#app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .nav-menu:hover {
+  background-color: hsl(243, 23%, 24%);
+}
 #app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .drop-menu-container {
   margin-top: 40px;
-  align-self: flex-start;
   padding: 10px;
   width: inherit;
   position: absolute;
@@ -204,16 +278,21 @@ body {
   width: 100%;
   border: 1px solid transparent;
   border-radius: 5px;
+  transition: all 0.1s ease-in;
 }
 #app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .drop-menu-container button.unit-switch:hover {
   background-color: hsl(243, 23%, 24%);
+  font-weight: 700;
 }
 #app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .drop-menu-container .drop-menu {
   position: relative;
   width: 100%;
 }
 #app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .drop-menu-container .drop-menu .display-option-for-unit .display-unit .unit-type {
-  font-size: 13.5px;
+  font-size: 12px;
+  display: flex;
+  gap: 5px;
+  color: hsl(240, 6%, 70%);
 }
 #app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .drop-menu-container .drop-menu .display-option-for-unit .display-unit .unit-container {
   position: relative;
@@ -253,14 +332,19 @@ body {
   flex-direction: column;
   gap: 20px;
 }
+@media screen and (max-width: 1180px) {
+  #app #appComponents .compartment-1 #searchContainer .search-container-parent {
+    padding: 0 10px;
+  }
+}
 #app #appComponents .compartment-1 #searchContainer .search-container-parent .heading-container {
   text-align: center;
   width: 100%;
 }
 #app #appComponents .compartment-1 #searchContainer .search-container-parent .heading-container #heading {
-  font-size: 32px;
+  font-size: clamp(28px, 10vw, 36px);
   font-weight: 300;
-  margin: 0;
+  margin: 10px auto;
   letter-spacing: 0.5px;
 }
 #app #appComponents .compartment-1 #searchContainer .search-container-parent .search-box-container {
@@ -318,6 +402,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
 }
 #app #appComponents .compartment-1 #searchContainer .search-container-parent .search-box-container .search-form .search-input-wrapper .loading-dropdown .loading-item {
   display: flex;
@@ -341,6 +426,7 @@ body {
   max-height: 250px;
   overflow-y: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
 }
 #app #appComponents .compartment-1 #searchContainer .search-container-parent .search-box-container .search-form .search-input-wrapper .suggestions-list .suggestion-item {
   padding: 12px 16px;
@@ -367,6 +453,16 @@ body {
   white-space: nowrap;
   outline: none;
   flex-shrink: 0;
+}
+@media screen and (max-width: 700px) {
+  #app #appComponents .compartment-1 #searchContainer .search-container-parent .search-box-container .search-form .search-button {
+    padding: 6px 16px;
+    height: 45px;
+  }
+  #app #appComponents .compartment-1 #searchContainer .search-container-parent .search-box-container .search-form .search-button img {
+    width: 100%;
+    margin-top: 4px;
+  }
 }
 #app #appComponents .compartment-1 #searchContainer .search-container-parent .search-box-container .search-form .search-button:hover:not(:disabled) {
   box-shadow: 0 4px 12px rgba(67.626, 85.1666, 217.974, 0.4);
