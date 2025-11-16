@@ -3,6 +3,7 @@ import { useGlobal } from '../utils/global_context'
 import iconSearch from '../assets/icon-search.svg'
 import iconLoading from '../assets/icon-loading.svg'
 import initiateSearch from '../services/location_fetcher'
+import location_pin from '../assets/location-pin.svg';
 
 type Place = {
     id: number
@@ -53,16 +54,26 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
 
     // Position dropdown and handle overflow
     useEffect(() => {
-        if (!inputRef.current) return
+        if (!inputRef.current || !showSuggestions) return
 
-        const inputRect = inputRef.current.getBoundingClientRect()
-        setDropdownStyle({
-            position: 'fixed',
-            top: `${inputRect.bottom + 4}px`,
-            left: `${inputRect.left}px`,
-            width: `${inputRect.width}px`,
-            zIndex: 999999,
-        })
+        const updateDropdownPosition = () => {
+            const inputRect = inputRef.current!.getBoundingClientRect()
+            setDropdownStyle({
+                position: 'fixed',
+                top: `${inputRect.bottom + 4}px`,
+                left: `${inputRect.left}px`,
+                width: `${inputRect.width}px`,
+                zIndex: 999999,
+            })
+        }
+
+        updateDropdownPosition()
+
+        // Also update on window resize
+        window.addEventListener('resize', updateDropdownPosition)
+        return () => {
+            window.removeEventListener('resize', updateDropdownPosition)
+        }
     }, [showSuggestions, suggestions, loading])
 
     // Fetch suggestions with debounce
@@ -183,7 +194,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
             <div id="searchContainer">
                 <div className="search-container-parent">
                     <div className="heading-container">
-                        <p id="heading">How's the sky looking today?</p>
+                        <h1 id="heading" className='bricolage-grotesque-700'>How's the sky looking today?</h1>
                     </div>
                     <div className="search-box-container">
                         <form onSubmit={onFormSubmit} className="search-form" role="search">
@@ -200,13 +211,13 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
                                     onFocus={() => {
                                         if (suggestions.length > 0 && !loading) setShowSuggestions(true)
                                     }}
-                                    className="search-input"
+                                    className="search-input dm-sans-300"
                                     autoComplete="off"
                                 />
                                 
                                 { showSuggestions && loading && (
                                     <div className="loading-dropdown" style={dropdownStyle}>
-                                        <div className="loading-item">
+                                        <div className="loading-item dm-sans-300">
                                             <img src={iconLoading} alt="Loading" className="loading-icon" />
                                             <span>Search in progress</span>
                                         </div>
@@ -230,9 +241,9 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
                                                 }}
                                                 onClick={() => onSelectSuggestion(s)}
                                                 onMouseEnter={() => setHighlight(i)}
-                                                className={`suggestion-item ${i === highlight ? 'highlighted' : ''}`}
+                                                className={`suggestion-item ${i === highlight ? 'highlighted dm-sans-500' : 'dm-sans-300'}`}
                                             >
-                                                {s.name}
+                                                {s.name}{s.country ? `, ${s.country}` : ''}
                                             </li>
                                         ))}
                                     </ul>
@@ -242,10 +253,10 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
                             <button
                                 type="submit"
                                 aria-label="Search"
-                                className="search-button"
+                                className="search-button dm-sans-300"
                                 disabled={loading}
                             >
-                                Search
+                                {window.screen.width > 700 ? 'Search' : (<><img src={location_pin} alt="search" /></>)}
                             </button>
                         </form>
                     </div>
