@@ -2,6 +2,7 @@
 import { NavBar } from './components/navbar'
 import { SearchBox } from './components/search_box'
 import Aurora from './components/aurora';
+import { WeatherData } from './components/weather_data';
 
 function App() {
 
@@ -18,6 +19,9 @@ function App() {
           <div className="compartment compartment-1">
             <NavBar />
             <SearchBox />
+          </div>
+          <div className="compartment compartment-2">
+            <WeatherData />
           </div>
         </div>
       </div>
