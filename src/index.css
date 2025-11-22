@@ -172,6 +172,13 @@ body {
 }
 
 #app {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* IE and Edge */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
+  /* WebKit (Chrome/Safari) */
   position: relative;
   margin: 0 auto;
   box-sizing: border-box;
@@ -179,10 +186,18 @@ body {
   padding: 0;
   width: 70rem;
   max-width: 70rem;
-  height: 100vh;
-  overflow-y: hidden;
   background: transparent;
   background-color: transparent;
+}
+#app::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+#app::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+#app::-webkit-scrollbar-track {
+  background: transparent;
 }
 @media screen and (max-width: 1200px) {
   #app {
@@ -296,7 +311,7 @@ body {
   transition: all 0.1s ease-in;
 }
 #app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .drop-menu-container button.unit-switch:hover {
-  background-color: hsl(243, 23%, 24%);
+  background-color: hsl(243, 96%, 9%);
   font-weight: 700;
 }
 #app #appComponents .compartment-1 #navbarContainer .navbar-components .nav-menu-container .drop-menu-container .drop-menu {
@@ -396,7 +411,7 @@ body {
   font-size: 16px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 7px;
-  background-color: hsl(243, 23%, 24%);
+  background-color: hsl(243, 27%, 20%);
   color: hsl(0, 0%, 100%);
   outline: none;
   transition: all 0.1s ease-in;
@@ -487,4 +502,239 @@ body {
 #app #appComponents .compartment-1 #searchContainer .search-container-parent .search-box-container .search-form .search-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+#app #appComponents .compartment-2 {
+  height: auto;
+  padding: 1%;
+  position: relative;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* IE and Edge */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
+  /* WebKit (Chrome/Safari) */
+}
+#app #appComponents .compartment-2::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+#app #appComponents .compartment-2::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+#app #appComponents .compartment-2::-webkit-scrollbar-track {
+  background: transparent;
+}
+#app #appComponents .compartment-2 #weatherContainer {
+  position: relative;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent {
+  display: flex;
+  justify-content: space-around;
+  overflow-x: hidden;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 {
+  flex-grow: 4;
+  width: 60%;
+  max-width: 45rem;
+  position: relative;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .main-weather-bg-container {
+  position: absolute;
+  z-index: -1;
+  width: inherit;
+  height: 280px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .main-weather-bg-container img {
+  width: 100%;
+  height: inherit;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 280px;
+  padding: 0 0 0 30px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-place-date-info .place-info {
+  font-size: 30px;
+  color: hsl(0, 0%, 100%);
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-place-date-info .date-info {
+  font-size: 15px;
+  color: hsl(250, 6%, 84%);
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-tempearature-info {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-tempearature-info .main-weather-icon {
+  width: 150px;
+  height: auto;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-tempearature-info .main-weather-icon img {
+  width: inherit;
+  height: inherit;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-tempearature-info .main-temperature-info {
+  font-size: 70px;
+  color: hsl(0, 0%, 100%);
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-metrics {
+  position: relative;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-metrics .weather-metrics-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: 80px;
+  box-sizing: border-box;
+  margin: 1rem 0 0 0;
+  padding: 0;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-metrics .weather-metrics-container .weather-metrics {
+  min-width: 120px;
+  max-width: 130px;
+  height: inherit;
+  background-color: hsl(243, 27%, 20%);
+  border: 1px solid transparent;
+  border-radius: 7px;
+  padding: 5px 10px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-metrics .weather-metrics-container .weather-metrics .stat-name {
+  font-size: 12px;
+  color: hsl(250, 6%, 84%);
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-metrics .weather-metrics-container .weather-metrics .stat-value {
+  font-size: 28px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 {
+  flex-grow: 1;
+  width: 40%;
+  max-width: 18rem;
+  position: relative;
+  margin-top: 15px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast {
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background-color: hsl(243, 27%, 20%);
+  padding: 5%;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hourly-forecast-headers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hourly-forecast-headers .hf-heading {
+  color: hsl(250, 6%, 84%);
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hourly-forecast-headers .hf-days-dropdown-container {
+  position: relative;
+  cursor: pointer;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hourly-forecast-headers .hf-days-dropdown-container .drop-button {
+  z-index: 1;
+  outline: none;
+  border: none;
+  background: transparent;
+  padding: 5px 7px;
+  margin: 0;
+  margin-left: 0;
+  color: hsl(0, 0%, 100%);
+  cursor: pointer;
+  width: auto;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  transition: all 0.1s ease-in;
+  display: flex;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hourly-forecast-headers .hf-days-dropdown-container .drop-button .drop-button-icon {
+  width: 10px;
+  height: auto;
+  margin-left: 4px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hourly-forecast-headers .hf-days-dropdown-container .drop-button .drop-button-icon img {
+  width: inherit;
+  height: inherit;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hourly-forecast-headers .hf-days-dropdown-container .drop-button:hover {
+  background-color: hsl(243, 23%, 24%);
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hourly-forecast-headers .hf-days-dropdown-container .days-menu-drop {
+  margin-top: 5px;
+  position: absolute;
+  z-index: 500;
+  border: 1px solid hsl(240, 6%, 70%);
+  background-color: hsl(243, 23%, 24%);
+  border-radius: 7px;
+  transition: all 0.1s ease-in;
+  margin-left: -2rem;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hourly-forecast-headers .hf-days-dropdown-container .days-menu-drop.animate-slide-down {
+  max-height: 245px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hourly-forecast-headers .hf-days-dropdown-container .days-menu-drop.animate-slide-up {
+  max-height: 245px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hourly-forecast-headers .hf-days-dropdown-container .days-menu-drop .days-container {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  width: 115px;
+  height: inherit;
+  font-size: 12.5px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hourly-forecast-headers .hf-days-dropdown-container .days-menu-drop .days-container .day-container {
+  padding: 5px 8px;
+  margin: 3px;
+  transition: all 0.1s ease-in;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hourly-forecast-headers .hf-days-dropdown-container .days-menu-drop .days-container .selected {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 14px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hourly-forecast-headers .hf-days-dropdown-container .days-menu-drop .days-container .day-container:hover {
+  background-color: hsl(243, 27%, 20%);
+  border-radius: 7px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hf-data-container .hf-data {
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background-color: hsl(243, 23%, 24%);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  font-size: 14px;
+  margin: 10px 0 0 0;
+  padding: 0 10px;
+  box-sizing: border-box;
+  height: 40px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hf-data-container .hf-data .left-side-data {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80px;
+  line-height: 0;
+  padding: 0;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hf-data-container .hf-data .left-side-data .hf-icon {
+  position: relative;
+  width: 40px;
+  height: auto;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hf-data-container .hf-data .left-side-data .hf-icon img {
+  width: inherit;
+  height: inherit;
 }/*# sourceMappingURL=index.css.map */
