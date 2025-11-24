@@ -1,10 +1,15 @@
-$mainBackgroundColor: hsl(243, 96%, 9%);
-$secondayBackgroundColor: hsl(243, 27%, 20%);
-$mainHoverColor: hsl(248, 70%, 36%);
-$alternateBackroundColor: hsl(243, 23%, 24%);
-$mainButtonBg: hsl(233, 67%, 56%);
-$mainFontColor: hsl(0, 0%, 100%);
-$alternateFontColor: hsl(240, 6%, 70%);
+$color1: hsl(243, 96%, 9%);
+$color2: hsl(243, 27%, 20%);
+$color3: hsl(248, 70%, 36%);
+$color4: hsl(243, 23%, 30%);
+$color5: hsl(250, 6%, 84%);
+$color6: hsl(243, 23%, 24%);
+$color7: hsl(243, 27%, 20%);
+$color8: hsl(243, 96%, 9%);
+$color9: hsl(233, 67%, 56%);
+$color10: hsl(0, 0%, 100%);
+$color11: hsl(240, 6%, 70%);
+$color12: hsl(250, 6%, 84%);
 $auroraColor1: #003161;
 $auroraColor2: #4455da;
 $auroraColor3: #006A67;
@@ -68,8 +73,8 @@ $mainTransitionRule: all .1s ease-in;
 }
 
 body {
-    background-color: $mainBackgroundColor;
-    color: $mainFontColor;
+    background-color: $color1;
+    color: $color10;
     padding: 0;
     margin: 0;
 }
@@ -94,6 +99,16 @@ body {
     overflow-x: hidden;
 }
 
+@mixin dm-sans-300() {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 300;
+}
+
+@mixin dm-sans-500() {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 500;
+}
+
 #errDiv {
     @include centerElememt();
 
@@ -115,7 +130,6 @@ body {
         }
     }
 }
-
 
 @keyframes rotateForward {
     from {
@@ -232,14 +246,40 @@ body {
     pointer-events: none;
 }
 
+@mixin hideScrollbar() {
+    overflow-y: auto; // allow scrolling
+    -webkit-overflow-scrolling: touch;
+
+    /* IE and Edge */
+    -ms-overflow-style: none;
+
+    /* Firefox */
+    scrollbar-width: none;
+
+    /* WebKit (Chrome/Safari) */
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+}
+
 #app {
+    @include hideScrollbar();
     position: relative;
     @include centerElementHorizontaly();
     padding: 0;
     width: $mainMaxWidth;
     max-width: $mainMaxWidth;
-    height: 100vh;
-    overflow-y: hidden;
+    // height: 100vh;
+    // overflow-y: hidden;
     background: transparent;
     background-color: transparent;
 
@@ -261,6 +301,7 @@ body {
         width: 100%;
         height: 100%;
         padding: 1%;
+
 
         .compartment-1 {
             width: inherit;
@@ -337,8 +378,8 @@ body {
                             padding: 10px;
                             width: inherit;
                             position: absolute;
-                            background-color: $secondayBackgroundColor;
-                            border: 1px solid $secondayBackgroundColor;
+                            background-color: $color2;
+                            border: 1px solid $color2;
                             border-radius: $mainBorderRadius;
                             transition: $mainTransitionRule;
                             font-size: $navMenuDropdownFontSize;
@@ -350,7 +391,7 @@ body {
                                 background: transparent;
                                 padding: 5px;
                                 margin: 0;
-                                color: $mainFontColor;
+                                color: $color10;
                                 cursor: pointer;
                                 width: 100%;
                                 border: 1px solid transparent;
@@ -359,7 +400,7 @@ body {
                             }
 
                             button.unit-switch:hover {
-                                background-color: $alternateBackroundColor;
+                                background-color: $color8;
                                 font-weight: 700;
                             }
 
@@ -374,7 +415,7 @@ body {
                                             font-size: 12px;
                                             display: flex;
                                             gap: 5px;
-                                            color: $alternateFontColor;
+                                            color: $color11;
                                         }
 
                                         .unit-container {
@@ -391,7 +432,7 @@ body {
                                             border-radius: $mainBorderRadius;
 
                                             &.unit-checked {
-                                                background-color: $alternateBackroundColor;
+                                                background-color: $color6;
                                                 transition: $mainTransitionRule;
                                                 visibility: visible;
                                                 opacity: 1;
@@ -470,29 +511,29 @@ body {
                                     width: 100%;
                                     padding: 12px 16px 12px 40px;
                                     font-size: 16px;
-                                    border: 1px solid rgba($mainFontColor, 0.2);
+                                    border: 1px solid rgba($color10, 0.2);
                                     border-radius: $mainBorderRadius;
-                                    background-color: $alternateBackroundColor;
-                                    color: $mainFontColor;
+                                    background-color: $color7;
+                                    color: $color10;
                                     outline: none;
                                     transition: $mainTransitionRule;
                                     box-sizing: border-box;
 
                                     &::placeholder {
-                                        color: rgba($mainFontColor, 0.5);
+                                        color: rgba($color10, 0.5);
                                     }
 
                                     &:focus {
-                                        // border-color: $mainButtonBg;
+                                        // border-color: $color9;
                                         border-color: $auroraColor2;
-                                        box-shadow: 0 0 0 3px rgba($mainButtonBg, 0.1);
+                                        box-shadow: 0 0 0 3px rgba($color9, 0.1);
                                     }
                                 }
 
                                 .loading-dropdown {
                                     padding: 12px 16px;
-                                    background-color: $alternateBackroundColor;
-                                    border: 1px solid rgba($mainFontColor, 0.2);
+                                    background-color: $color6;
+                                    border: 1px solid rgba($color10, 0.2);
                                     border-radius: $mainBorderRadius;
                                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
                                     box-sizing: border-box;
@@ -501,7 +542,7 @@ body {
                                         display: flex;
                                         align-items: center;
                                         gap: 10px;
-                                        color: rgba($mainFontColor, 0.7);
+                                        color: rgba($color10, 0.7);
                                         font-size: 14px;
 
                                         .loading-icon {
@@ -516,8 +557,8 @@ body {
                                     padding: 0;
                                     margin-top: .1rem;
                                     list-style: none;
-                                    background-color: $alternateBackroundColor;
-                                    border: 1px solid rgba($mainFontColor, 0.2);
+                                    background-color: $color6;
+                                    border: 1px solid rgba($color10, 0.2);
                                     border-radius: $mainBorderRadius;
                                     max-height: 250px;
                                     overflow-y: auto;
@@ -528,7 +569,7 @@ body {
                                         padding: 12px 16px;
                                         cursor: pointer;
                                         transition: $mainTransitionRule;
-                                        border-bottom: 1px solid rgba($mainFontColor, 0.1);
+                                        border-bottom: 1px solid rgba($color10, 0.1);
 
                                         &:last-child {
                                             border-bottom: none;
@@ -536,7 +577,7 @@ body {
 
                                         &:hover,
                                         &.highlighted {
-                                            background-color: $secondayBackgroundColor;
+                                            background-color: $color2;
                                         }
                                     }
                                 }
@@ -548,8 +589,8 @@ body {
                                 font-weight: 500;
                                 border: none;
                                 border-radius: $mainBorderRadius;
-                                background-color: $mainButtonBg;
-                                color: $mainFontColor;
+                                background-color: $color9;
+                                color: $color10;
                                 cursor: pointer;
                                 transition: $mainTransitionRule;
                                 white-space: nowrap;
@@ -568,8 +609,8 @@ body {
 
                                 &:hover:not(:disabled) {
                                     // opacity: 0.9;
-                                    box-shadow: 0 4px 12px rgba($mainButtonBg, 0.4);
-                                    background-color: $mainHoverColor;
+                                    box-shadow: 0 4px 12px rgba($color9, 0.4);
+                                    background-color: $color3;
                                 }
 
                                 // &:active:not(:disabled) {
@@ -579,6 +620,269 @@ body {
                                 &:disabled {
                                     opacity: 0.6;
                                     cursor: not-allowed;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .compartment-2 {
+            height: auto;
+            padding: 1%;
+            position: relative;
+            @include hideScrollbar();
+
+            #weatherContainer {
+                position: relative;
+
+                .weather-components-parent {
+                    display: flex;
+                    justify-content: space-around;
+                    $weatherBGHeight: 280px;
+                    overflow-x: hidden;
+
+                    .weather-component-1 {
+                        flex-grow: 4;
+                        width: 60%;
+                        max-width: 45rem;
+                        position: relative;
+
+                        .main-weather-display {
+                            .main-weather-bg-container {
+                                position: absolute;
+                                z-index: -1;
+                                width: inherit;
+                                height: $weatherBGHeight;
+
+                                img {
+                                    width: 100%;
+                                    height: inherit;
+                                }
+                            }
+
+                            .weather-display-container {
+                                position: relative;
+                                z-index: 0;
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: space-between;
+                                align-items: center;
+                                height: $weatherBGHeight;
+                                padding: 0 0 0 30px;
+
+                                .main-place-date-info {
+                                    .place-info {
+                                        font-size: 30px;
+                                        color: $color10;
+                                    }
+
+                                    .date-info {
+                                        font-size: 15px;
+                                        color: $color12;
+                                    }
+                                }
+
+                                .main-tempearature-info {
+                                    display: flex;
+                                    flex-direction: row-reverse;
+                                    align-items: center;
+
+                                    .main-weather-icon {
+                                        width: 150px;
+                                        height: auto;
+
+                                        img {
+                                            width: inherit;
+                                            height: inherit;
+                                        }
+                                    }
+
+                                    .main-temperature-info {
+                                        font-size: 70px;
+                                        color: $color10;
+                                    }
+                                }
+                            }
+                        }
+
+                        .main-weather-metrics {
+                            position: relative;
+
+                            .weather-metrics-container {
+                                display: flex;
+                                flex-direction: row;
+                                flex-wrap: wrap;
+                                justify-content: space-around;
+                                height: 80px;
+                                box-sizing: border-box;
+                                margin: 1rem 0 0 0;
+                                padding: 0;
+
+                                .weather-metrics {
+                                    min-width: 120px;
+                                    max-width: 130px;
+                                    height: inherit;
+                                    background-color: $color7;
+                                    border: 1px solid transparent;
+                                    border-radius: $mainBorderRadius;
+                                    padding: 5px 10px;
+
+                                    .stat-name {
+                                        font-size: 12px;
+                                        color: $color12;
+                                    }
+
+                                    .stat-value {
+                                        font-size: 28px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .weather-component-2 {
+                        flex-grow: 1;
+                        width: 40%;
+                        max-width: 18rem;
+                        position: relative;
+                        margin-top: 15px;
+
+                        .hourly-forecast {
+                            border: 1px solid transparent;
+                            border-radius: $mainBorderRadius;
+                            background-color: $color7;
+                            padding: 5%;
+                            .hourly-forecast-headers {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+
+                                .hf-heading {
+                                    color: $color12;
+                                }
+
+                                .hf-days-dropdown-container {
+                                    position: relative;
+                                    cursor: pointer;
+
+                                    .drop-button {
+                                        z-index: 1;
+                                        outline: none;
+                                        border: none;
+                                        background: transparent;
+                                        padding: 5px 7px;
+                                        margin: 0;
+                                        margin-left: 0;
+                                        color: $color10;
+                                        cursor: pointer;
+                                        width: auto;
+                                        border: 1px solid transparent;
+                                        border-radius: $mainBorderRadius;
+                                        transition: $mainTransitionRule;
+                                        display: flex;
+
+                                        .drop-button-icon {
+                                            width: 10px;
+                                            height: auto;
+                                            margin-left: 4px;
+
+                                            img {
+                                                width: inherit;
+                                                height: inherit;
+                                            }
+                                        }
+                                    }
+
+                                    .drop-button:hover {
+                                        background-color: $color6;
+                                    }
+
+                                    .days-menu-drop {
+                                        margin-top: 5px;
+                                        position: absolute;
+                                        z-index: 500;
+                                        border: 1px solid $color11;
+                                        background-color: $color6;
+                                        border-radius: $mainBorderRadius;
+                                        transition: $mainTransitionRule;
+                                        margin-left: -2rem;
+
+                                        &.animate-slide-down {
+                                            max-height: 245px;
+                                        }
+
+                                        &.animate-slide-up {
+                                            max-height: 245px;
+                                        }
+
+                                        .days-container {
+                                            margin-top: 5px;
+                                            display: flex;
+                                            flex-direction: column;
+                                            width: 115px;
+                                            height: inherit;
+                                            font-size: 12.5px;
+
+                                            .day-container {
+                                                padding: 5px 8px;
+                                                margin: 3px;
+                                                transition: $mainTransitionRule;
+                                            }
+
+                                            .selected {
+                                                font-family: "DM Sans", sans-serif;
+                                                font-optical-sizing: auto;
+                                                font-weight: 700;
+                                                font-style: normal;
+                                                font-size: 14px;
+                                            }
+
+                                            .day-container:hover {
+                                                background-color: $color7;
+                                                border-radius: $mainBorderRadius;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            .hf-data-container {
+                                .hf-data {
+                                    border: 1px solid transparent;
+                                    border-radius: $mainBorderRadius;
+                                    background-color: $color6;
+                                    display: flex;
+                                    flex-direction: row;
+                                    justify-content: space-between;
+                                    align-items: center;
+                                    position: relative;
+                                    font-size: 14px;
+                                    margin: 10px 0 0 0;
+                                    padding: 0 10px;
+                                    box-sizing: border-box;
+                                    height: 40px;
+
+                                    .left-side-data {
+                                        display: flex;
+                                        justify-content: space-between;
+                                        align-items: center;
+                                        width: 80px;
+                                        line-height: 0;
+                                        padding: 0;
+
+                                        .hf-icon {
+                                            position: relative;
+                                            width: 40px;
+                                            height: auto;
+
+                                            img {
+                                                width: inherit;
+                                                height: inherit;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }

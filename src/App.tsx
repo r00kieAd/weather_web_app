@@ -8,12 +8,12 @@ function App() {
 
   return (
     <>
-      <Aurora
+      {/* <Aurora
         colorStops={["#003161", "#4455da", "#006A67"]}
         blend={0.5}
         amplitude={1.0}
         speed={0.6}
-      />
+      /> */}
       <div id='app'>
         <div id="appComponents">
           <div className="compartment compartment-1">
