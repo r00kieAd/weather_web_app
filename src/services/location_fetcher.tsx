@@ -7,7 +7,7 @@ interface SearchParams {
 }
 
 async function initiateSearch({name, count}: SearchParams) {
-    const base = API.BASE_URI;
+    const base = API.GEO_URI;
     const version = API.VERSION;
     const search = API.SEARCH;
     const url = `${base}/${version}/${search}?name=${name}&count=${count}&language=en&format=json`;

@@ -530,24 +530,54 @@ body {
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
   overflow-x: hidden;
 }
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1,
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 {
+  min-width: 0;
+  box-sizing: border-box;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent > .weather-component-1 {
+  flex: 0 0 50%;
+  max-width: 40rem;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent > .weather-component-2 {
+  flex: 0 0 30%;
+  max-width: 20rem;
+}
+@media screen and (max-width: 900px) {
+  #app #appComponents .compartment-2 #weatherContainer .weather-components-parent > .weather-component-1,
+  #app #appComponents .compartment-2 #weatherContainer .weather-components-parent > .weather-component-2 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 {
-  flex-grow: 4;
-  width: 60%;
-  max-width: 45rem;
+  flex-grow: 1;
   position: relative;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .main-weather-bg-container {
   position: absolute;
-  z-index: -1;
-  width: inherit;
-  height: 280px;
-}
-#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .main-weather-bg-container img {
+  top: 0;
+  left: 0;
+  z-index: 0;
   width: 100%;
-  height: inherit;
+  height: 250px;
+  background-image: url("./assets/bg-today-large.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  pointer-events: none;
+}
+@media screen and (max-width: 375px) {
+  #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .main-weather-bg-container {
+    background-image: url("./assets/bg-today-small.svg");
+  }
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container {
   position: relative;
@@ -556,7 +586,7 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 280px;
+  height: 250px;
   padding: 0 0 0 30px;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-place-date-info .place-info {
@@ -615,10 +645,7 @@ body {
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 {
   flex-grow: 1;
-  width: 40%;
-  max-width: 18rem;
   position: relative;
-  margin-top: 15px;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast {
   border: 1px solid transparent;
@@ -670,7 +697,7 @@ body {
   margin-top: 5px;
   position: absolute;
   z-index: 500;
-  border: 1px solid hsl(240, 6%, 70%);
+  border: 1px solid #57595B;
   background-color: hsl(243, 23%, 24%);
   border-radius: 7px;
   transition: all 0.1s ease-in;

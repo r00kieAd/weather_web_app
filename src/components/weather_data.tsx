@@ -114,7 +114,6 @@ export const WeatherData: React.FC = () => {
                 <div className="weather-component weather-component-1">
                     <div className="weather-data main-weather-display weather-data-1">
                         <div className="main-weather-bg-container">
-                            <img src={main_weather_bg} alt="" />
                         </div>
                         <div className="weather-display-container">
                             <div className="main-place-date-info">

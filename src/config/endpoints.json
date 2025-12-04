@@ -1,5 +1,8 @@
 {
-    "BASE_URI": "https://geocoding-api.open-meteo.com",
+    "GEO_URI": "https://geocoding-api.open-meteo.com",
+    "FORECAST_URI": "https://api.open-meteo.com",
     "VERSION": "v1",
-    "SEARCH": "search"
+    "SEARCH": "search",
+    "FORECAST": "forecast",
+    "FORECAST_FIXED_PARAMS": "daily=temperature_2m_max,temperature_2m_min&hourly=temperature_2m&current=temperature_2m,relative_humidity_2m,precipitation,is_day,wind_speed_10m,apparent_temperature"
 }

@@ -10,6 +10,7 @@ $color9: hsl(233, 67%, 56%);
 $color10: hsl(0, 0%, 100%);
 $color11: hsl(240, 6%, 70%);
 $color12: hsl(250, 6%, 84%);
+$color13: #57595B;
 $auroraColor1: #003161;
 $auroraColor2: #4455da;
 $auroraColor3: #006A67;
@@ -24,6 +25,7 @@ $navDropButtonWidth: 85px;
 $navMenuDropdownFontSize: 14px;
 $navDropContainerHeight: 380px;
 $unitContainerHeight: 20px;
+$weatherBGHeight: 250px;
 $mainFontSize: 18px;
 $mainHeaderFontSize: clamp(28px, 10vw, 36px);
 $mainTransitionRule: all .1s ease-in;
@@ -639,27 +641,63 @@ body {
 
                 .weather-components-parent {
                     display: flex;
-                    justify-content: space-around;
-                    $weatherBGHeight: 280px;
+                    justify-content: center;
+                    flex-wrap: wrap;
+                    gap: 20px;
                     overflow-x: hidden;
 
+                    @media screen {}
+
+                    .weather-component-1,
+                    .weather-component-2 {
+                        min-width: 0;
+                        box-sizing: border-box;
+                    }
+
+                    >.weather-component-1 {
+                        flex: 0 0 50%;
+                        max-width: 40rem;
+                    }
+
+                    >.weather-component-2 {
+                        flex: 0 0 30%;
+                        max-width: 20rem;
+                    }
+
+                    @media screen and (max-width: 900px) {
+
+                        >.weather-component-1,
+                        >.weather-component-2 {
+                            flex: 0 0 100%;
+                            max-width: 100%;
+                        }
+                    }
+
                     .weather-component-1 {
-                        flex-grow: 4;
-                        width: 60%;
-                        max-width: 45rem;
+                        flex-grow: 1;
                         position: relative;
 
                         .main-weather-display {
+
                             .main-weather-bg-container {
                                 position: absolute;
-                                z-index: -1;
-                                width: inherit;
+                                top: 0;
+                                left: 0;
+                                z-index: 0;
+                                width: 100%;
                                 height: $weatherBGHeight;
+                                background-image: url("./assets/bg-today-large.svg");
+                                background-size: cover;
+                                background-position: center;
+                                background-repeat: no-repeat;
+                                border: 1px solid transparent;
+                                border-radius: $mainBorderRadius;
+                                pointer-events: none;
 
-                                img {
-                                    width: 100%;
-                                    height: inherit;
+                                @media screen and (max-width: 375px) {
+                                    background-image: url("./assets/bg-today-small.svg");
                                 }
+
                             }
 
                             .weather-display-container {
@@ -744,16 +782,14 @@ body {
 
                     .weather-component-2 {
                         flex-grow: 1;
-                        width: 40%;
-                        max-width: 18rem;
                         position: relative;
-                        margin-top: 15px;
 
                         .hourly-forecast {
                             border: 1px solid transparent;
                             border-radius: $mainBorderRadius;
                             background-color: $color7;
                             padding: 5%;
+
                             .hourly-forecast-headers {
                                 display: flex;
                                 justify-content: space-between;
@@ -803,7 +839,7 @@ body {
                                         margin-top: 5px;
                                         position: absolute;
                                         z-index: 500;
-                                        border: 1px solid $color11;
+                                        border: 1px solid $color13;
                                         background-color: $color6;
                                         border-radius: $mainBorderRadius;
                                         transition: $mainTransitionRule;
