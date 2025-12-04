@@ -32,14 +32,12 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
     const wrapperRef = useRef<HTMLDivElement | null>(null)
     const inputRef = useRef<HTMLInputElement | null>(null)
 
-    // Cleanup on unmount
     useEffect(() => {
         return () => {
             if (debounceRef.current) window.clearTimeout(debounceRef.current)
         }
     }, [])
 
-    // Handle click outside to close suggestions
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
@@ -53,7 +51,6 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
         }
     }, [])
 
-    // Position dropdown and handle overflow
     useEffect(() => {
         if (!inputRef.current || !showSuggestions) return
 
@@ -70,14 +67,12 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
 
         updateDropdownPosition()
 
-        // Also update on window resize
         window.addEventListener('resize', updateDropdownPosition)
         return () => {
             window.removeEventListener('resize', updateDropdownPosition)
         }
     }, [showSuggestions, suggestions, loading])
 
-    // Fetch suggestions with debounce
     useEffect(() => {
         if (!query.trim()) {
             setSuggestions([])
@@ -85,11 +80,8 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
             setLoading(false)
             return
         }
-
-        // Clear previous timer
         if (debounceRef.current) window.clearTimeout(debounceRef.current)
 
-        // Show loading state immediately
         setLoading(true)
         setShowSuggestions(true)
 
@@ -125,8 +117,6 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
         setSuggestions([])
         setHighlight(-1)
         setQuery('')
-
-        // Set global context
         setLocationId(place.id)
         setLocationName(place.name)
         setLocationCountry(place.country)
@@ -145,18 +135,13 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
 
         if (!query.trim()) return
 
-        // if a suggestion is highlighted, use it
         if (highlight >= 0 && suggestions[highlight]) {
             onSelectSuggestion(suggestions[highlight])
             return
         }
-
-        // otherwise, trigger search without selection
-        // in this case we submit the raw query - you may want to fetch here
     }
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        // If no suggestions visible, only handle Enter
         if (!showSuggestions || suggestions.length === 0) {
             if (e.key === 'Enter') {
                 e.preventDefault()
@@ -165,7 +150,6 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
             return
         }
 
-        // Handle arrow keys and Enter when suggestions are visible
         switch (e.key) {
             case 'ArrowDown':
                 e.preventDefault()
