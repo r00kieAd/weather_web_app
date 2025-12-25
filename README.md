@@ -1,21 +1,38 @@
-# React + TypeScript + Vite
+# Weather Web App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Status: Work in Progress**
 
-While this project uses React, Vite supports many popular JS frameworks. [See all the supported frameworks](https://vitejs.dev/guide/#scaffolding-your-first-vite-project).
+A modern weather application built with React, TypeScript, and Vite. The app provides real-time weather information for any location, displaying current conditions, hourly forecasts, and comprehensive weather metrics.
 
-## Deploy Your Own
+## Features
 
-Deploy your own Vite project with Vercel.
+- Location-based weather search with autocomplete suggestions
+- Real-time weather data including temperature, humidity, wind speed, and precipitation
+- Hourly forecast display with weather icons and temperature readings
+- Dynamic weather icon selection based on weather codes
+- Responsive design optimized for multiple screen sizes
+- Global state management for weather data and location information
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/examples/tree/main/framework-boilerplates/vite-react&template=vite-react)
+## Technology Stack
 
-_Live Example: https://vite-react-example.vercel.app_
+- React with TypeScript
+- Vite for build tooling and development server
+- SCSS for styling
+- Geolocation API for location-based services
+- Open-Meteo API for weather data
 
-### Deploying From Your Terminal
+## Project Structure
 
-You can deploy your new Vite project with a single command from your terminal using [Vercel CLI](https://vercel.com/download):
+The application is organized with clear separation of concerns:
+- Components for UI elements and views
+- Services for API calls and data fetching
+- Utilities for global state management and context
+- Configuration files for weather codes and API endpoints
 
-```shell
-$ vercel
-```
+## Todos
+
+1. Add Daily forecast
+2. Update hourly forecast with current time
+3. Update hourly forecast with future days
+4. Add loading mask
+5. Test UI in different screens
