@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react'
 import sunny from '../assets/icon-sunny.webp'
-import main_weather_bg from '../assets/bg-today-large.svg'
+// import main_weather_bg from '../assets/bg-today-large.svg'
 import drop_icon from '../assets/icon-dropdown.svg'
+import { useGlobal } from '../utils/global_context'
 
 
 interface ForecastDay {
@@ -18,15 +19,15 @@ interface HourlyForecast {
 }
 
 export const WeatherData: React.FC = () => {
-    const [forecast, setForecast] = useState<ForecastDay[]>([])
+    const [dailyForecast, setDailyForecast] = useState<ForecastDay[]>([])
     const [hourlyForecast, setHourlyForecast] = useState<HourlyForecast[]>([])
-
     const daysDropMenuDiv = useRef<HTMLDivElement>(null);
     const dropMenuIcon = useRef<HTMLDivElement>(null);
     const daysDrop = useRef<HTMLDivElement>(null);
+    const { temperature, feelsLike, humidity, wind, precipitation, locationName, locationCountry, hourlyData } = useGlobal();
 
     const [daysDropVisible, setDaysDropVisible] = useState<boolean>(false);
-    
+
     // Dummy list of days for the dropdown (this could later come from forecast data)
     const dummyDays: string[] = ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday']
     const [selectedDay, setSelectedDay] = useState<string>(dummyDays[0])
@@ -40,23 +41,20 @@ export const WeatherData: React.FC = () => {
         { day: 'Sat', icon: sunny, maxTemp: 25, minTemp: 18 },
         { day: 'Sun', icon: sunny, maxTemp: 24, minTemp: 19 }
     ]
-
-    // Dummy JSON data for hourly forecast (8 hours)
-    const dummyHourlyData: HourlyForecast[] = [
-        { time: '12 AM', icon: sunny, temp: 18 },
-        { time: '3 AM', icon: sunny, temp: 16 },
-        { time: '6 AM', icon: sunny, temp: 15 },
-        { time: '9 AM', icon: sunny, temp: 17 },
-        { time: '12 PM', icon: sunny, temp: 20 },
-        { time: '3 PM', icon: sunny, temp: 22 },
-        { time: '6 PM', icon: sunny, temp: 19 },
-        { time: '9 PM', icon: sunny, temp: 17 }
-    ]
+    // setDailyForecast(dummyForecastData);
 
     useEffect(() => {
-        setForecast(dummyForecastData)
-        setHourlyForecast(dummyHourlyData)
-    }, [])
+        console.log(hourlyData);
+        const dummyHourlyData: HourlyForecast[] = [];
+        for (let i = 0; i < 8; i++) {
+            dummyHourlyData.push({
+                time: hourlyData?.time[i] ? hourlyData.time[i].substring(11) : '',
+                icon: sunny,
+                temp: hourlyData?.temperature_2m[i] ? Math.round(hourlyData.temperature_2m[i]) : 0
+            });
+        };
+        setHourlyForecast(dummyHourlyData);
+    }, [hourlyData]);
 
     const main_icon = sunny;
 
@@ -117,7 +115,7 @@ export const WeatherData: React.FC = () => {
                         </div>
                         <div className="weather-display-container">
                             <div className="main-place-date-info">
-                                <div className="place-info dm-sans-600">Berlin, Germany</div>
+                                <div className="place-info dm-sans-600">{locationName}{locationCountry? `, ${locationCountry}` : ''}</div>
                                 <div className="date-info dm-sans-500">Thursday, Aug 5, 2025</div>
                             </div>
                             <div className="main-tempearature-info">
@@ -125,7 +123,7 @@ export const WeatherData: React.FC = () => {
                                     <img src={main_icon} alt="" className="main-icon" />
                                 </div>
                                 <div className="main-temperature-info dm-sans-600i">
-                                    <p className='main-temp'>20</p>
+                                    <p className='main-temp'>{temperature}</p>
                                 </div>
                             </div>
                         </div>
@@ -134,19 +132,19 @@ export const WeatherData: React.FC = () => {
                         <div className="weather-metrics-container">
                             <div className="feels-like-metric weather-metrics">
                                 <p className="feels-like-heading stat-name dm-sans-500">Feels Like</p>
-                                <span className="feels-like-data stat-value dm-sans-300">18</span>
+                                <span className="feels-like-data stat-value dm-sans-300">{feelsLike}</span>
                             </div>
                             <div className="humidity-metric weather-metrics">
                                 <p className="humidity-heading stat-name dm-sans-500">Humidity</p>
-                                <span className="humidity-data stat-value dm-sans-300">46%</span>
+                                <span className="humidity-data stat-value dm-sans-300">{humidity}%</span>
                             </div>
                             <div className="wind-metric weather-metrics">
                                 <p className="wind-heading stat-name dm-sans-500">Wind</p>
-                                <span className="wind-data stat-value dm-sans-300">14 kmph</span>
+                                <span className="wind-data stat-value dm-sans-300">{wind} kmph</span>
                             </div>
                             <div className="precipiration-metric weather-metrics">
                                 <p className="precipiration-heading stat-name dm-sans-500">Precipiration</p>
-                                <span className="precipiration-data stat-value dm-sans-300">0 mm</span>
+                                <span className="precipiration-data stat-value dm-sans-300">{precipitation} mm</span>
                             </div>
                         </div>
                     </div>

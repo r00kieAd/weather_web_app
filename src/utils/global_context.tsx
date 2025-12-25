@@ -1,6 +1,11 @@
 import { createContext, useState, useContext } from "react";
 import type { ReactNode } from "react";
 
+interface HourlyData {
+    time: string[];
+    temperature_2m: number[];
+}
+
 interface GlobalState {
     isImperial: boolean;
     setIsImperial: (value: boolean) => null;
@@ -32,6 +37,8 @@ interface GlobalState {
     setLocationLongitude: (value: number) => null;
     locationTimezone: string;
     setLocationTimezone: (value: string) => null;
+    hourlyData?: HourlyData;
+    setHourlyData?: (value: HourlyData) => null;
 }
 
 const GlobalContext = createContext<GlobalState | undefined>(undefined);
@@ -52,6 +59,7 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
     const [locationTimezone, setLocationTimezone] = useState<string>("");
     const [locationLattitude, setLocationLattitude] = useState<number>(0);
     const [locationLongitude, setLocationLongitude] = useState<number>(0);
+    const [hourlyData, setHourlyData] = useState<HourlyData | undefined>(undefined);
 
     return (
         <GlobalContext.Provider value={{
@@ -84,7 +92,9 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
             locationLongitude,
             setLocationLongitude,
             locationTimezone,
-            setLocationTimezone
+            setLocationTimezone,
+            hourlyData,
+            setHourlyData
         } as unknown as GlobalState}>
             {children}
         </GlobalContext.Provider>

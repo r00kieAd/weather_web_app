@@ -1,0 +1,108 @@
+{
+  "weather_descriptions": {
+    "0": {
+      "day": "clear",
+      "night": "clear",
+      "description": "Clear sky"
+    },
+    "1": {
+      "value": "mostly_clear",
+      "description": "Mainly clear"
+    },
+    "2": {
+      "value": "partly_cloudy",
+      "description": "Partly cloudy"
+    },
+    "3": {
+      "value": "overcast",
+      "description": "Overcast"
+    },
+
+    "45": {
+      "value": "fog",
+      "description": "Fog"
+    },
+    "48": {
+      "value": "fog",
+      "description": "Rime fog"
+    },
+
+    "51": {
+      "value": "drizzle",
+      "description": "Light drizzle"
+    },
+    "53": {
+      "value": "drizzle",
+      "description": "Moderate drizzle"
+    },
+    "55": {
+      "value": "drizzle",
+      "description": "Dense drizzle"
+    },
+
+    "61": {
+      "value": "rain",
+      "description": "Slight rain"
+    },
+    "63": {
+      "value": "rain",
+      "description": "Moderate rain"
+    },
+    "65": {
+      "value": "rain",
+      "description": "Heavy rain"
+    },
+
+    "71": {
+      "value": "snow",
+      "description": "Slight snow"
+    },
+    "73": {
+      "value": "snow",
+      "description": "Moderate snow"
+    },
+    "75": {
+      "value": "snow",
+      "description": "Heavy snow"
+    },
+    "77": {
+      "value": "snow",
+      "description": "Snow grains"
+    },
+
+    "80": {
+      "value": "showers",
+      "description": "Rain showers"
+    },
+    "81": {
+      "value": "showers",
+      "description": "Moderate rain showers"
+    },
+    "82": {
+      "value": "showers",
+      "description": "Violent rain showers"
+    },
+
+    "85": {
+      "value": "snow_showers",
+      "description": "Snow showers"
+    },
+    "86": {
+      "value": "snow_showers",
+      "description": "Heavy snow showers"
+    },
+
+    "95": {
+      "value": "thunderstorm",
+      "description": "Thunderstorm"
+    },
+    "96": {
+      "value": "thunderstorm",
+      "description": "Thunderstorm with hail"
+    },
+    "99": {
+      "value": "thunderstorm",
+      "description": "Severe thunderstorm with hail"
+    }
+  }
+}

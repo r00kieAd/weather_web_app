@@ -3,6 +3,7 @@ import { useGlobal } from '../utils/global_context'
 import iconSearch from '../assets/icon-search.svg'
 import iconLoading from '../assets/icon-loading.svg'
 import initiateSearch from '../services/location_fetcher'
+import getWeatherForecast from '../services/get_forecast'
 import location_pin from '../assets/location-pin.svg'
 import SplitText from './split'
 
@@ -19,7 +20,9 @@ type SearchBoxProps = {
 }
 
 export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
-    const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude } = useGlobal()
+    const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude } = useGlobal();
+    const { setTemperature, setFeelsLike, setHumidity, setWind, setPrecipitation } = useGlobal();
+    const { setHourlyData } = useGlobal();
 
     const [query, setQuery] = useState('')
     const [suggestions, setSuggestions] = useState<Place[]>([])
@@ -123,7 +126,26 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
         setLocationLattitude(place.latitude)
         setLocationLongitude(place.longitude)
 
-        if (onSearch) onSearch(place)
+        if (onSearch) onSearch(place);
+        weatherForecast(place);
+    }
+
+    async function weatherForecast(place: Place) {
+        const forecast = await getWeatherForecast({ longitude: String(place.longitude), latitude: String(place.latitude) });
+        console.log('Forecast Data:', forecast.resp);
+        setTemperature(forecast.resp.current.temperature_2m);
+        setFeelsLike(forecast.resp.current.apparent_temperature);
+        setHumidity(forecast.resp.current.relative_humidity_2m);
+        setWind(forecast.resp.current.wind_speed_10m);
+        setPrecipitation(forecast.resp.current.precipitation);
+        const hourly_temps = forecast.resp.hourly.temperature_2m;
+        const hourly_times = forecast.resp.hourly.time;
+        // for (let i=0; i<8; i++) {
+        //     hourly_times[i] = hourly_times[i].substring(11);
+        //     hourly_temps[i] = Math.round(hourly_temps[i]);
+        //     console.log(hourly_times[i], hourly_temps[i]);
+        // }
+        if (setHourlyData) setHourlyData({time: hourly_times, temperature_2m: hourly_temps});
     }
 
     const onSelectSuggestion = (place: Place) => {
