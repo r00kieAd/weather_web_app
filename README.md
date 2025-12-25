@@ -1,8 +1,8 @@
-# Weather Web App
+# Weather Now
 
 **Status: Work in Progress**
 
-A modern weather application built with React, TypeScript, and Vite. The app provides real-time weather information for any location, displaying current conditions, hourly forecasts, and comprehensive weather metrics.
+A modern weather application built with React, TypeScript, and Vite. The app provides real-time weather information for any location, displaying current conditions, hourly forecasts, and comprehensive weather metrics. This project was taken from Frontend Mentor's [Weather App](https://www.frontendmentor.io/challenges/weather-app-K1FhddVm49) exercise, which I developed and modified.
 
 ## Features
 
