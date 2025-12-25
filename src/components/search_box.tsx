@@ -3,6 +3,7 @@ import { useGlobal } from '../utils/global_context'
 import iconSearch from '../assets/icon-search.svg'
 import iconLoading from '../assets/icon-loading.svg'
 import initiateSearch from '../services/location_fetcher'
+import getWeatherForecast from '../services/get_forecast'
 import location_pin from '../assets/location-pin.svg'
 import SplitText from './split'
 
@@ -12,6 +13,8 @@ type Place = {
     country: string
     latitude: number
     longitude: number
+    weather_code: number
+    is_day: number
 }
 
 type SearchBoxProps = {
@@ -19,7 +22,9 @@ type SearchBoxProps = {
 }
 
 export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
-    const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude } = useGlobal()
+    const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude } = useGlobal();
+    const { setTemperature, setFeelsLike, setHumidity, setWind, setPrecipitation, setCurrWeatherCode, setIsDay } = useGlobal();
+    const { setHourlyData } = useGlobal();
 
     const [query, setQuery] = useState('')
     const [suggestions, setSuggestions] = useState<Place[]>([])
@@ -122,8 +127,25 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
         setLocationCountry(place.country)
         setLocationLattitude(place.latitude)
         setLocationLongitude(place.longitude)
+        if (onSearch) onSearch(place);
+        weatherForecast(place);
+    }
 
-        if (onSearch) onSearch(place)
+    async function weatherForecast(place: Place) {
+        const forecast = await getWeatherForecast({ longitude: String(place.longitude), latitude: String(place.latitude) });
+        console.log('Forecast Data:', forecast.resp);
+        setTemperature(forecast.resp.current.temperature_2m);
+        setFeelsLike(forecast.resp.current.apparent_temperature);
+        setHumidity(forecast.resp.current.relative_humidity_2m);
+        setWind(forecast.resp.current.wind_speed_10m);
+        setPrecipitation(forecast.resp.current.precipitation);
+        setIsDay(forecast.resp.current.is_day);
+        if (setCurrWeatherCode) setCurrWeatherCode(place.weather_code);
+        const hourly_temps = forecast.resp.hourly.temperature_2m;
+        const hourly_times = forecast.resp.hourly.time;
+        const hourly_codes = forecast.resp.hourly.weather_code;
+        const is_day = forecast.resp.hourly.is_day;
+        if (setHourlyData) setHourlyData({time: hourly_times, temperature_2m: hourly_temps, iconCode: hourly_codes, is_day: is_day});
     }
 
     const onSelectSuggestion = (place: Place) => {
