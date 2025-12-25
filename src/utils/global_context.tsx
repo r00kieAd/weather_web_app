@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 interface HourlyData {
     time: string[];
     temperature_2m: number[];
+    iconCode: number[];
+    is_day: number[];
 }
 
 interface GlobalState {
@@ -31,6 +33,10 @@ interface GlobalState {
     setLocationName: (value: string) => null;
     locationCountry: string;
     setLocationCountry: (value: string) => null;
+    currWeatherCode?: number;
+    setCurrWeatherCode?: (value: number) => null;
+    is_day: number;
+    setIsDay: (value: number) => null;
     locationLattitude: number;
     setLocationLattitude: (value: number) => null;
     locationLongitude: number;
@@ -59,6 +65,8 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
     const [locationTimezone, setLocationTimezone] = useState<string>("");
     const [locationLattitude, setLocationLattitude] = useState<number>(0);
     const [locationLongitude, setLocationLongitude] = useState<number>(0);
+    const [currWeatherCode, setCurrWeatherCode] = useState<number>(0);
+    const [is_day, setIsDay] = useState<number>(1);
     const [hourlyData, setHourlyData] = useState<HourlyData | undefined>(undefined);
 
     return (
@@ -87,6 +95,8 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
             setLocationName,
             locationCountry,
             setLocationCountry,
+            currWeatherCode,
+            setCurrWeatherCode,
             locationLattitude,
             setLocationLattitude,
             locationLongitude,
@@ -94,7 +104,9 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
             locationTimezone,
             setLocationTimezone,
             hourlyData,
-            setHourlyData
+            setHourlyData,
+            is_day,
+            setIsDay
         } as unknown as GlobalState}>
             {children}
         </GlobalContext.Provider>

@@ -605,6 +605,7 @@ body {
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-tempearature-info .main-weather-icon {
   width: 150px;
   height: auto;
+  padding: 1px;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-tempearature-info .main-weather-icon img {
   width: inherit;
@@ -758,7 +759,7 @@ body {
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hf-data-container .hf-data .left-side-data .hf-icon {
   position: relative;
-  width: 40px;
+  width: 30px;
   height: auto;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast .hf-data-container .hf-data .left-side-data .hf-icon img {

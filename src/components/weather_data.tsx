@@ -1,16 +1,24 @@
 import { useEffect, useState, useRef } from 'react'
 import sunny from '../assets/icon-sunny.webp'
-// import main_weather_bg from '../assets/bg-today-large.svg'
+import drizzle from '../assets/icon-drizzle.webp'
+import partlyCloudy from '../assets/icon-partly-cloudy.webp'
+import overcast from '../assets/icon-overcast.webp'
+import fog from '../assets/icon-fog.webp'
+import rain from '../assets/icon-rain.webp'
+import storm from '../assets/icon-storm.webp'
+import snow from '../assets/icon-snow.webp'
 import drop_icon from '../assets/icon-dropdown.svg'
+import night from '../assets/icon-night.png'
 import { useGlobal } from '../utils/global_context'
+import weatherCodes from '../config/weather_codes.json'
 
 
-interface ForecastDay {
-    day: string
-    icon: string
-    maxTemp: number
-    minTemp: number
-}
+// interface ForecastDay {
+//     day: string
+//     icon: string
+//     maxTemp: number
+//     minTemp: number
+// }
 
 interface HourlyForecast {
     time: string
@@ -19,37 +27,64 @@ interface HourlyForecast {
 }
 
 export const WeatherData: React.FC = () => {
-    const [dailyForecast, setDailyForecast] = useState<ForecastDay[]>([])
+    // const [dailyForecast, setDailyForecast] = useState<ForecastDay[]>([])
     const [hourlyForecast, setHourlyForecast] = useState<HourlyForecast[]>([])
     const daysDropMenuDiv = useRef<HTMLDivElement>(null);
     const dropMenuIcon = useRef<HTMLDivElement>(null);
     const daysDrop = useRef<HTMLDivElement>(null);
-    const { temperature, feelsLike, humidity, wind, precipitation, locationName, locationCountry, hourlyData } = useGlobal();
+    const { temperature, feelsLike, humidity, wind, precipitation, locationName, locationCountry, currWeatherCode, is_day, hourlyData } = useGlobal();
 
     const [daysDropVisible, setDaysDropVisible] = useState<boolean>(false);
 
-    // Dummy list of days for the dropdown (this could later come from forecast data)
     const dummyDays: string[] = ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday']
     const [selectedDay, setSelectedDay] = useState<string>(dummyDays[0])
-    // Dummy JSON data for daily forecast
-    const dummyForecastData: ForecastDay[] = [
-        { day: 'Mon', icon: sunny, maxTemp: 22, minTemp: 15 },
-        { day: 'Tue', icon: sunny, maxTemp: 20, minTemp: 14 },
-        { day: 'Wed', icon: sunny, maxTemp: 19, minTemp: 13 },
-        { day: 'Thu', icon: sunny, maxTemp: 21, minTemp: 16 },
-        { day: 'Fri', icon: sunny, maxTemp: 23, minTemp: 17 },
-        { day: 'Sat', icon: sunny, maxTemp: 25, minTemp: 18 },
-        { day: 'Sun', icon: sunny, maxTemp: 24, minTemp: 19 }
-    ]
-    // setDailyForecast(dummyForecastData);
+
+    // Function to map weather code to icon
+    const getIconForWeatherCode = (weatherCode: number, isDay: number): string => {
+        const codeStr = weatherCode.toString();
+        const weatherData = weatherCodes.weather_descriptions[codeStr as keyof typeof weatherCodes.weather_descriptions];
+        
+        if (!weatherData) return sunny;
+
+        const weatherValue = weatherData.value;
+        
+        switch (weatherValue) {
+            case 'clear':
+            case 'mostly_clear':
+                if (isDay === 0) {
+                    return night;
+                } else {
+                    return sunny;
+                }
+            case 'partly_cloudy':
+                return partlyCloudy;
+            case 'overcast':
+                return overcast;
+            case 'fog':
+                return fog;
+            case 'drizzle':
+                return drizzle;
+            case 'rain':
+            case 'showers':
+                return rain;
+            case 'snow':
+            case 'snow_showers':
+                return snow;
+            case 'thunderstorm':
+                return storm;
+            default:
+                return sunny;
+        }
+    };
 
     useEffect(() => {
         console.log(hourlyData);
         const dummyHourlyData: HourlyForecast[] = [];
         for (let i = 0; i < 8; i++) {
+            const weatherCode = hourlyData?.iconCode?.[i] ?? 0;
             dummyHourlyData.push({
                 time: hourlyData?.time[i] ? hourlyData.time[i].substring(11) : '',
-                icon: sunny,
+                icon: getIconForWeatherCode(weatherCode, is_day),
                 temp: hourlyData?.temperature_2m[i] ? Math.round(hourlyData.temperature_2m[i]) : 0
             });
         };
@@ -120,7 +155,7 @@ export const WeatherData: React.FC = () => {
                             </div>
                             <div className="main-tempearature-info">
                                 <div className="main-weather-icon">
-                                    <img src={main_icon} alt="" className="main-icon" />
+                                    <img src={getIconForWeatherCode(currWeatherCode ?? 0, is_day)} alt="" className="main-icon" />
                                 </div>
                                 <div className="main-temperature-info dm-sans-600i">
                                     <p className='main-temp'>{temperature}</p>

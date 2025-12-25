@@ -13,6 +13,8 @@ type Place = {
     country: string
     latitude: number
     longitude: number
+    weather_code: number
+    is_day: number
 }
 
 type SearchBoxProps = {
@@ -21,7 +23,7 @@ type SearchBoxProps = {
 
 export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
     const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude } = useGlobal();
-    const { setTemperature, setFeelsLike, setHumidity, setWind, setPrecipitation } = useGlobal();
+    const { setTemperature, setFeelsLike, setHumidity, setWind, setPrecipitation, setCurrWeatherCode, setIsDay } = useGlobal();
     const { setHourlyData } = useGlobal();
 
     const [query, setQuery] = useState('')
@@ -125,7 +127,6 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
         setLocationCountry(place.country)
         setLocationLattitude(place.latitude)
         setLocationLongitude(place.longitude)
-
         if (onSearch) onSearch(place);
         weatherForecast(place);
     }
@@ -138,14 +139,13 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
         setHumidity(forecast.resp.current.relative_humidity_2m);
         setWind(forecast.resp.current.wind_speed_10m);
         setPrecipitation(forecast.resp.current.precipitation);
+        setIsDay(forecast.resp.current.is_day);
+        if (setCurrWeatherCode) setCurrWeatherCode(place.weather_code);
         const hourly_temps = forecast.resp.hourly.temperature_2m;
         const hourly_times = forecast.resp.hourly.time;
-        // for (let i=0; i<8; i++) {
-        //     hourly_times[i] = hourly_times[i].substring(11);
-        //     hourly_temps[i] = Math.round(hourly_temps[i]);
-        //     console.log(hourly_times[i], hourly_temps[i]);
-        // }
-        if (setHourlyData) setHourlyData({time: hourly_times, temperature_2m: hourly_temps});
+        const hourly_codes = forecast.resp.hourly.weather_code;
+        const is_day = forecast.resp.hourly.is_day;
+        if (setHourlyData) setHourlyData({time: hourly_times, temperature_2m: hourly_temps, iconCode: hourly_codes, is_day: is_day});
     }
 
     const onSelectSuggestion = (place: Place) => {

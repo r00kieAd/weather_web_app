@@ -1,8 +1,7 @@
 {
   "weather_descriptions": {
     "0": {
-      "day": "clear",
-      "night": "clear",
+      "value": "clear",
       "description": "Clear sky"
     },
     "1": {
