@@ -4,5 +4,5 @@
     "VERSION": "v1",
     "SEARCH": "search",
     "FORECAST": "forecast",
-    "FORECAST_FIXED_PARAMS": "daily=temperature_2m_max,temperature_2m_min&hourly=temperature_2m,weather_code&current=temperature_2m,relative_humidity_2m,precipitation,is_day,wind_speed_10m,apparent_temperature,weather_code&timezone=GMT"
+    "FORECAST_FIXED_PARAMS": "daily=temperature_2m_max,temperature_2m_min&hourly=temperature_2m,weather_code&current=temperature_2m,relative_humidity_2m,precipitation,is_day,wind_speed_10m,apparent_temperature,weather_code&timezone="
 }

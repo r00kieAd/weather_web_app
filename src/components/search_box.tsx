@@ -21,7 +21,7 @@ type SearchBoxProps = {
 }
 
 export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
-    const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude, setIsLoading, isLoading } = useGlobal();
+    const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude, setIsLoading, locationTimezone } = useGlobal();
     const { setTemperature, setFeelsLike, setHumidity, setWind, setPrecipitation, setCurrWeatherCode, setIsDay } = useGlobal();
     const { setHourlyData } = useGlobal();
 
@@ -133,7 +133,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
     async function weatherForecast(place: Place) {
         setIsLoading(true);
         try {
-            const forecast = await getWeatherForecast({ longitude: String(place.longitude), latitude: String(place.latitude) });
+            const forecast = await getWeatherForecast({ longitude: String(place.longitude), latitude: String(place.latitude), timezone: locationTimezone });
             console.log('Forecast Data:', forecast.resp);
             setTemperature(forecast.resp.current.temperature_2m);
             setFeelsLike(forecast.resp.current.apparent_temperature);
@@ -150,6 +150,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
             if (setHourlyData) setHourlyData({time: hourly_times, temperature_2m: hourly_temps, iconCode: hourly_codes, is_day: is_day});
         } catch (err) {
             alert('Error while fetching data, please try again');
+            setIsLoading(false);
             console.error(err);
         }
     }
