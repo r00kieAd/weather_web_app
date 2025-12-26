@@ -8,9 +8,12 @@ import rain from '../assets/icon-rain.webp'
 import storm from '../assets/icon-storm.webp'
 import snow from '../assets/icon-snow.webp'
 import drop_icon from '../assets/icon-dropdown.svg'
+import empty from '../assets/space.png'
 import night from '../assets/icon-night.png'
 import { useGlobal } from '../utils/global_context'
 import weatherCodes from '../config/weather_codes.json'
+import ShowLoading from '../components/loading'
+import DEFAULTS from '../config/defaults.json'
 
 
 // interface ForecastDay {
@@ -33,21 +36,43 @@ export const WeatherData: React.FC = () => {
     const dropMenuIcon = useRef<HTMLDivElement>(null);
     const daysDrop = useRef<HTMLDivElement>(null);
     const { temperature, feelsLike, humidity, wind, precipitation, locationName, locationCountry, currWeatherCode, is_day, hourlyData } = useGlobal();
-
+    const { setIsLoading, displayedDay, displayedDate, setDisplayedDay, setDisplayedDate, isImperial } = useGlobal();
     const [daysDropVisible, setDaysDropVisible] = useState<boolean>(false);
-
     const dummyDays: string[] = ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday']
     const [selectedDay, setSelectedDay] = useState<string>(dummyDays[0])
 
-    // Function to map weather code to icon
-    const getIconForWeatherCode = (weatherCode: number, isDay: number): string => {
+    useEffect(() => {
+        const now = new Date();
+    
+        const dayName = now.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'UTC' });
+        const day = now.getUTCDate();
+        const month = now.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' });
+        const year = now.getUTCFullYear();
+        const getOrdinalSuffix = (num: number): string => {
+            const j = num % 10;
+            const k = num % 100;
+            
+            if (j === 1 && k !== 11) return 'st';
+            if (j === 2 && k !== 12) return 'nd';
+            if (j === 3 && k !== 13) return 'rd';
+            return 'th';
+        };
+        
+        const dateStr = `${day}${getOrdinalSuffix(day)} ${month}, ${year}`;
+        
+        setDisplayedDay(dayName);
+        setDisplayedDate(dateStr);
+    }, [])
+
+    const getIconForWeatherCode = (weatherCode: number = 999, isDay: number): string => {
+        // if (weatherCode === -1) alert('-1');
         const codeStr = weatherCode.toString();
         const weatherData = weatherCodes.weather_descriptions[codeStr as keyof typeof weatherCodes.weather_descriptions];
         
         if (!weatherData) return sunny;
 
         const weatherValue = weatherData.value;
-        
+        console.log(weatherValue);
         switch (weatherValue) {
             case 'clear':
             case 'mostly_clear':
@@ -73,7 +98,7 @@ export const WeatherData: React.FC = () => {
             case 'thunderstorm':
                 return storm;
             default:
-                return sunny;
+                return empty;
         }
     };
 
@@ -81,7 +106,7 @@ export const WeatherData: React.FC = () => {
         console.log(hourlyData);
         const dummyHourlyData: HourlyForecast[] = [];
         for (let i = 0; i < 8; i++) {
-            const weatherCode = hourlyData?.iconCode?.[i] ?? 0;
+            const weatherCode = hourlyData?.iconCode?.[i] ?? 999;
             dummyHourlyData.push({
                 time: hourlyData?.time[i] ? hourlyData.time[i].substring(11) : '',
                 icon: getIconForWeatherCode(weatherCode, is_day),
@@ -89,9 +114,12 @@ export const WeatherData: React.FC = () => {
             });
         };
         setHourlyForecast(dummyHourlyData);
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 1000);
     }, [hourlyData]);
 
-    const main_icon = sunny;
+    // const main_icon = sunny;
 
     function displayDaysDrop() {
         if (!daysDropVisible) {
@@ -145,20 +173,21 @@ export const WeatherData: React.FC = () => {
         <div id="weatherContainer">
             <div className="weather-components-parent">
                 <div className="weather-component weather-component-1">
+                    <ShowLoading/>
                     <div className="weather-data main-weather-display weather-data-1">
                         <div className="main-weather-bg-container">
                         </div>
                         <div className="weather-display-container">
                             <div className="main-place-date-info">
                                 <div className="place-info dm-sans-600">{locationName}{locationCountry? `, ${locationCountry}` : ''}</div>
-                                <div className="date-info dm-sans-500">Thursday, Aug 5, 2025</div>
+                                <div className="date-info dm-sans-500">{displayedDay} {displayedDate}</div>
                             </div>
                             <div className="main-tempearature-info">
                                 <div className="main-weather-icon">
-                                    <img src={getIconForWeatherCode(currWeatherCode ?? 0, is_day)} alt="" className="main-icon" />
+                                    <img src={getIconForWeatherCode(currWeatherCode ?? 999, is_day)} alt="" className="main-icon" />
                                 </div>
                                 <div className="main-temperature-info dm-sans-600i">
-                                    <p className='main-temp'>{temperature}</p>
+                                    <p className='main-temp'>{temperature} {isImperial ? DEFAULTS.FAHRENHEIT : DEFAULTS.CELCIUS}</p>
                                 </div>
                             </div>
                         </div>
@@ -167,7 +196,7 @@ export const WeatherData: React.FC = () => {
                         <div className="weather-metrics-container">
                             <div className="feels-like-metric weather-metrics">
                                 <p className="feels-like-heading stat-name dm-sans-500">Feels Like</p>
-                                <span className="feels-like-data stat-value dm-sans-300">{feelsLike}</span>
+                                <span className="feels-like-data stat-value dm-sans-300">{feelsLike} {isImperial ? DEFAULTS.FAHRENHEIT : DEFAULTS.CELCIUS}</span>
                             </div>
                             <div className="humidity-metric weather-metrics">
                                 <p className="humidity-heading stat-name dm-sans-500">Humidity</p>
@@ -175,11 +204,11 @@ export const WeatherData: React.FC = () => {
                             </div>
                             <div className="wind-metric weather-metrics">
                                 <p className="wind-heading stat-name dm-sans-500">Wind</p>
-                                <span className="wind-data stat-value dm-sans-300">{wind} kmph</span>
+                                <span className="wind-data stat-value dm-sans-300">{wind} {isImperial ? DEFAULTS.MPH : DEFAULTS.KMPH}</span>
                             </div>
                             <div className="precipiration-metric weather-metrics">
                                 <p className="precipiration-heading stat-name dm-sans-500">Precipiration</p>
-                                <span className="precipiration-data stat-value dm-sans-300">{precipitation} mm</span>
+                                <span className="precipiration-data stat-value dm-sans-300">{precipitation}{isImperial ? DEFAULTS.IN : DEFAULTS.MM}</span>
                             </div>
                         </div>
                     </div>
@@ -206,6 +235,7 @@ export const WeatherData: React.FC = () => {
                     </div> */}
                 </div>
                 <div className="weather-component weather-component-2">
+                    <ShowLoading/>
                     <div className="weather-data hourly-forecast">
                         <div className="hourly-forecast-headers">
                             <span className="hf-heading dm-sans-500">Hourly Forecast</span>

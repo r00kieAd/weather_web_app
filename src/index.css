@@ -171,6 +171,35 @@ body {
   pointer-events: none;
 }
 
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.loading-overlay .inner-loading-comps {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.loading-overlay .inner-loading-comps img {
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+.loading-overlay .inner-loading-comps span {
+  margin-top: 10px;
+  font-size: 10px;
+  color: hsl(250, 6%, 84%);
+}
+
 #app {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -603,7 +632,7 @@ body {
   align-items: center;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-tempearature-info .main-weather-icon {
-  width: 150px;
+  width: 140px;
   height: auto;
   padding: 1px;
 }
@@ -612,7 +641,7 @@ body {
   height: inherit;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-tempearature-info .main-temperature-info {
-  font-size: 70px;
+  font-size: 60px;
   color: hsl(0, 0%, 100%);
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-metrics {

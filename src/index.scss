@@ -273,6 +273,37 @@ body {
     }
 }
 
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    .inner-loading-comps {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        span {
+            margin-top: 10px;
+            font-size: 10px;
+            color: $color12;
+        }
+    }
+}
+
 #app {
     @include hideScrollbar();
     position: relative;
@@ -728,9 +759,10 @@ body {
                                     align-items: center;
 
                                     .main-weather-icon {
-                                        width: 150px;
+                                        width: 140px;
                                         height: auto;
                                         padding: 1px;
+
                                         img {
                                             width: inherit;
                                             height: inherit;
@@ -738,7 +770,7 @@ body {
                                     }
 
                                     .main-temperature-info {
-                                        font-size: 70px;
+                                        font-size: 60px;
                                         color: $color10;
                                     }
                                 }

@@ -102,6 +102,10 @@
     "99": {
       "value": "thunderstorm",
       "description": "Severe thunderstorm with hail"
+    },
+    "999": {
+      "value": "empty",
+      "description": "no data"
     }
   }
 }

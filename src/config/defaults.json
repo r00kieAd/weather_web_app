@@ -1,4 +1,10 @@
 {
     "METRIC": "Metric",
-    "IMPERIAL": "Imperial"
+    "IMPERIAL": "Imperial",
+    "CELCIUS": "°C",
+    "FAHRENHEIT": "°F",
+    "KMPH": "kmph",
+    "MPH": "mph",
+    "MM": "mm",
+    "IN": "in" 
 }

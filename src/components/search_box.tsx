@@ -22,7 +22,7 @@ type SearchBoxProps = {
 }
 
 export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
-    const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude } = useGlobal();
+    const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude, setIsLoading, isLoading } = useGlobal();
     const { setTemperature, setFeelsLike, setHumidity, setWind, setPrecipitation, setCurrWeatherCode, setIsDay } = useGlobal();
     const { setHourlyData } = useGlobal();
 
@@ -132,20 +132,26 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
     }
 
     async function weatherForecast(place: Place) {
-        const forecast = await getWeatherForecast({ longitude: String(place.longitude), latitude: String(place.latitude) });
-        console.log('Forecast Data:', forecast.resp);
-        setTemperature(forecast.resp.current.temperature_2m);
-        setFeelsLike(forecast.resp.current.apparent_temperature);
-        setHumidity(forecast.resp.current.relative_humidity_2m);
-        setWind(forecast.resp.current.wind_speed_10m);
-        setPrecipitation(forecast.resp.current.precipitation);
-        setIsDay(forecast.resp.current.is_day);
-        if (setCurrWeatherCode) setCurrWeatherCode(place.weather_code);
-        const hourly_temps = forecast.resp.hourly.temperature_2m;
-        const hourly_times = forecast.resp.hourly.time;
-        const hourly_codes = forecast.resp.hourly.weather_code;
-        const is_day = forecast.resp.hourly.is_day;
-        if (setHourlyData) setHourlyData({time: hourly_times, temperature_2m: hourly_temps, iconCode: hourly_codes, is_day: is_day});
+        setIsLoading(true);
+        try {
+            const forecast = await getWeatherForecast({ longitude: String(place.longitude), latitude: String(place.latitude) });
+            console.log('Forecast Data:', forecast.resp);
+            setTemperature(forecast.resp.current.temperature_2m);
+            setFeelsLike(forecast.resp.current.apparent_temperature);
+            setHumidity(forecast.resp.current.relative_humidity_2m);
+            setWind(forecast.resp.current.wind_speed_10m);
+            setPrecipitation(forecast.resp.current.precipitation);
+            setIsDay(forecast.resp.current.is_day);
+            if (setCurrWeatherCode) setCurrWeatherCode(place.weather_code);
+            const hourly_temps = forecast.resp.hourly.temperature_2m;
+            const hourly_times = forecast.resp.hourly.time;
+            const hourly_codes = forecast.resp.hourly.weather_code;
+            const is_day = forecast.resp.hourly.is_day;
+            if (setHourlyData) setHourlyData({time: hourly_times, temperature_2m: hourly_temps, iconCode: hourly_codes, is_day: is_day});
+        } catch (err) {
+            alert('Error while fetching data, please try again');
+            console.error(err);
+        }
     }
 
     const onSelectSuggestion = (place: Place) => {
