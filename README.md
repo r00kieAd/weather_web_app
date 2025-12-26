@@ -32,7 +32,5 @@ The application is organized with clear separation of concerns:
 ## Todos
 
 1. Add Daily forecast
-2. Update hourly forecast with current time
-3. Update hourly forecast with future days
-4. Add loading mask
-5. Test UI in different screens
+2. Change Units and it's values
+2. Test UI in different screens
