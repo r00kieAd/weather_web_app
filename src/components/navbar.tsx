@@ -75,13 +75,13 @@ export const NavBar: React.FC = () => {
                                     <div className="display-unit display-temp-unit">
                                         <p className='unit-type dm-sans-700'>Temperature<img src={temp} alt="fire" /></p>
                                         <div className={`unit-container temp-unit-a temp-unit${!isImperial ? ' unit-checked' : ''}`}>
-                                            <p className='unit-name'>Celsius (°C)</p>
+                                            <p className='unit-name'>Celsius ({DEFAULTS.CELCIUS})</p>
                                             <p className='unit-checkmark unit-checkmark-a'>
                                                 {!isImperial && <img src={checkmark} alt="checkmark" />}
                                             </p>
                                         </div>
                                         <div className={`unit-container temp-unit-b temp-unit${isImperial ? ' unit-checked' : ''}`}>
-                                            <p className='unit-name'>Fahrenheit (°F)</p>
+                                            <p className='unit-name'>Fahrenheit ({DEFAULTS.FAHRENHEIT})</p>
                                             <p className='unit-checkmark unit-checkmark-b'>
                                                 {isImperial && <img src={checkmark} alt="checkmark" />}
                                             </p>
@@ -91,13 +91,13 @@ export const NavBar: React.FC = () => {
                                     <div className="display-unit display-wind-unit">
                                         <p className='unit-type dm-sans-700'>Wind<img src={winds} alt="thermometer" /></p>
                                         <div className={`unit-container wind-unit-a wind-unit${!isImperial ? ' unit-checked' : ''}`}>
-                                            <p className='unit-name'>km/h</p>
+                                            <p className='unit-name'>{DEFAULTS.KMPH}</p>
                                             <p className='unit-checkmark unit-checkmark-a'>
                                                 {!isImperial && <img src={checkmark} alt="checkmark" />}
                                             </p>
                                         </div>
                                         <div className={`unit-container wind-unit-b wind-unit${isImperial ? ' unit-checked' : ''}`}>
-                                            <p className='unit-name'>mph</p>
+                                            <p className='unit-name'>{DEFAULTS.MPH}</p>
                                             <p className='unit-checkmark unit-checkmark-b'>
                                                 {isImperial && <img src={checkmark} alt="checkmark" />}
                                             </p>
@@ -107,13 +107,13 @@ export const NavBar: React.FC = () => {
                                     <div className="display-unit display-precipitation-unit">
                                         <p className='unit-type dm-sans-700'>Precipitation<img src={drops} alt="thermometer" /></p>
                                         <div className={`unit-container precipitation-unit-a precipitation-unit${!isImperial ? ' unit-checked' : ''}`}>
-                                            <p className='unit-name'>Millimeters (mm)</p>
+                                            <p className='unit-name'>Millimeters ({DEFAULTS.MM})</p>
                                             <p className='unit-checkmark unit-checkmark-a'>
                                                 {!isImperial && <img src={checkmark} alt="checkmark" />}
                                             </p>
                                         </div>
                                         <div className={`unit-container precipitation-unit-b precipitation-unit${isImperial ? ' unit-checked' : ''}`}>
-                                            <p className='unit-name'>Inches (in)</p>
+                                            <p className='unit-name'>Inches ({DEFAULTS.IN})</p>
                                             <p className='unit-checkmark unit-checkmark-b'>
                                                 {isImperial && <img src={checkmark} alt="checkmark" />}
                                             </p>
