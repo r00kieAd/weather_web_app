@@ -13,7 +13,6 @@ type Place = {
     country: string
     latitude: number
     longitude: number
-    weather_code: number
     is_day: number
 }
 
@@ -142,7 +141,8 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
             setWind(forecast.resp.current.wind_speed_10m);
             setPrecipitation(forecast.resp.current.precipitation);
             setIsDay(forecast.resp.current.is_day);
-            if (setCurrWeatherCode) setCurrWeatherCode(place.weather_code);
+            if (setCurrWeatherCode) setCurrWeatherCode(forecast.resp.current.weather_code);
+            // alert(place.weather_code);
             const hourly_temps = forecast.resp.hourly.temperature_2m;
             const hourly_times = forecast.resp.hourly.time;
             const hourly_codes = forecast.resp.hourly.weather_code;

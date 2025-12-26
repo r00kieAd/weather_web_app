@@ -64,7 +64,7 @@ export const WeatherData: React.FC = () => {
         setDisplayedDate(dateStr);
     }, [])
 
-    const getIconForWeatherCode = (weatherCode: number = 999, isDay: number): string => {
+    const getIconForWeatherCode = (weatherCode: number, isDay: number): string => {
         // if (weatherCode === -1) alert('-1');
         const codeStr = weatherCode.toString();
         const weatherData = weatherCodes.weather_descriptions[codeStr as keyof typeof weatherCodes.weather_descriptions];
