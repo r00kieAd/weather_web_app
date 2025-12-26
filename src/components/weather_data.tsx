@@ -36,10 +36,32 @@ export const WeatherData: React.FC = () => {
     const dropMenuIcon = useRef<HTMLDivElement>(null);
     const daysDrop = useRef<HTMLDivElement>(null);
     const { temperature, feelsLike, humidity, wind, precipitation, locationName, locationCountry, currWeatherCode, is_day, hourlyData } = useGlobal();
-    const { setIsLoading, displayedDay, displayedDate, setDisplayedDay, setDisplayedDate, isImperial } = useGlobal();
+    const { setIsLoading, displayedDay, displayedDate, setDisplayedDay, setDisplayedDate, isImperial, locationTimezone, setLocationTimezone } = useGlobal();
     const [daysDropVisible, setDaysDropVisible] = useState<boolean>(false);
-    const dummyDays: string[] = ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday']
-    const [selectedDay, setSelectedDay] = useState<string>(dummyDays[0])
+
+    const getNextSevenDays = (): string[] => {
+        const days: string[] = [];
+        const today = new Date();
+        
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(today);
+            date.setDate(date.getDate() + i);
+            const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+            days.push(dayName);
+        }
+        
+        return days;
+    };
+
+    const getAllDays = getNextSevenDays();
+    const [dummyDays, setDummyDays] = useState<string[]>(getAllDays);
+    const [selectedDay, setSelectedDay] = useState<string>(getAllDays[0]);
+
+    useEffect(() => {
+        if (dummyDays.length > 0) {
+            setSelectedDay(dummyDays[0]);
+        }
+    }, [dummyDays]);
 
     useEffect(() => {
         const now = new Date();
@@ -105,19 +127,64 @@ export const WeatherData: React.FC = () => {
     useEffect(() => {
         console.log(hourlyData);
         const dummyHourlyData: HourlyForecast[] = [];
+        
+        const timezone = locationTimezone ? locationTimezone.split(' ')[0] : 'GMT';
+        const now = new Date();
+        const timeInTimezone = new Date(now.toLocaleString('en-US', { timeZone: timezone }))
+        const tomorrow = new Date(timeInTimezone);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const tomorrowDateStr = tomorrow.getFullYear() + '-' +
+                                String(tomorrow.getMonth() + 1).padStart(2, '0') + '-' +
+                                String(tomorrow.getDate()).padStart(2, '0');
+        let startIndex = 0;
+        if (hourlyData?.time && hourlyData.time.length > 0) {
+            for (let i = 0; i < hourlyData.time.length; i++) {
+                const timeStr = hourlyData.time[i];
+                const dateStr = timeStr.substring(0, 10);
+                const hour = parseInt(timeStr.substring(11, 13));
+                
+                if (dateStr === tomorrowDateStr && hour === 0) {
+                    startIndex = i;
+                    break;
+                }
+            }
+        }
+        
+        const forecastDays: string[] = [];
+        let dayDate = new Date(tomorrow);
+        for (let d = 0; d < 7; d++) {
+            const dayName = dayDate.toLocaleDateString('en-US', { weekday: 'long' });
+            forecastDays.push(dayName);
+            dayDate.setDate(dayDate.getDate() + 1);
+        }
+        
+        if (forecastDays.length > 0) {
+            setDummyDays(forecastDays);
+        }
+        
         for (let i = 0; i < 8; i++) {
-            const weatherCode = hourlyData?.iconCode?.[i] ?? 999;
-            dummyHourlyData.push({
-                time: hourlyData?.time[i] ? hourlyData.time[i].substring(11) : '',
-                icon: getIconForWeatherCode(weatherCode, is_day),
-                temp: hourlyData?.temperature_2m[i] ? Math.round(hourlyData.temperature_2m[i]) : 0
-            });
-        };
+            const index = startIndex + i;
+            if (hourlyData?.time && index < hourlyData.time.length) {
+                const weatherCode = hourlyData.iconCode?.[index] ?? 999;
+                dummyHourlyData.push({
+                    time: hourlyData.time[index].substring(11),
+                    icon: getIconForWeatherCode(weatherCode, is_day),
+                    temp: hourlyData.temperature_2m[index] ? Math.round(hourlyData.temperature_2m[index]) : 0
+                });
+            } else {
+                dummyHourlyData.push({
+                    time: '',
+                    icon: empty,
+                    temp: 0
+                });
+            }
+        }
+        
         setHourlyForecast(dummyHourlyData);
         setTimeout(() => {
             setIsLoading(false);
         }, 1000);
-    }, [hourlyData]);
+    }, [hourlyData, locationTimezone]);
 
     // const main_icon = sunny;
 
@@ -163,9 +230,63 @@ export const WeatherData: React.FC = () => {
 
     function selectDay(day?: string) {
         if (day) {
-            setSelectedDay(day)
-            // close the dropdown after selecting
-            closeDaysDrop()
+            setSelectedDay(day);
+            closeDaysDrop();
+            
+            const timezone = locationTimezone ? locationTimezone.split(' ')[0] : 'UTC';
+            const now = new Date();
+            const timeInTimezone = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
+            
+            // Calculate tomorrow's date
+            const tomorrow = new Date(timeInTimezone);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            // Find which day was selected (0-6)
+            const selectedDayIndex = dummyDays.indexOf(day);
+            
+            // Calculate the date for the selected day
+            const selectedDate = new Date(tomorrow);
+            selectedDate.setDate(selectedDate.getDate() + selectedDayIndex);
+            const selectedDateStr = selectedDate.getFullYear() + '-' +
+                                    String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
+                                    String(selectedDate.getDate()).padStart(2, '0');
+            
+            // Find index of selected day at 00:00
+            let dayStartIndex = 0;
+            if (hourlyData?.time && hourlyData.time.length > 0) {
+                for (let i = 0; i < hourlyData.time.length; i++) {
+                    const timeStr = hourlyData.time[i];
+                    const dateStr = timeStr.substring(0, 10);
+                    const hour = parseInt(timeStr.substring(11, 13));
+                    
+                    if (dateStr === selectedDateStr && hour === 0) {
+                        dayStartIndex = i;
+                        break;
+                    }
+                }
+            }
+            
+            // Populate with selected day's hours (00:00-07:00)
+            const dummyHourlyData: HourlyForecast[] = [];
+            for (let i = 0; i < 8; i++) {
+                const index = dayStartIndex + i;
+                if (hourlyData?.time && index < hourlyData.time.length) {
+                    const weatherCode = hourlyData.iconCode?.[index] ?? 999;
+                    dummyHourlyData.push({
+                        time: hourlyData.time[index].substring(11),
+                        icon: getIconForWeatherCode(weatherCode, is_day),
+                        temp: hourlyData.temperature_2m[index] ? Math.round(hourlyData.temperature_2m[index]) : 0
+                    });
+                } else {
+                    dummyHourlyData.push({
+                        time: '',
+                        icon: empty,
+                        temp: 0
+                    });
+                }
+            }
+            
+            setHourlyForecast(dummyHourlyData);
         }
     }
 
@@ -267,7 +388,7 @@ export const WeatherData: React.FC = () => {
                                         <p className="hf-h-time">{hour.time}</p>
                                     </div>
                                     <div className="right-side-data dm-sans-500">
-                                        <p className={`hf-temp hf-d${index + 1}-temp`}>{hour.temp}</p>
+                                        <p className={`hf-temp hf-d${index + 1}-temp`}>{hour.temp} {isImperial ? DEFAULTS.FAHRENHEIT : DEFAULTS.CELCIUS}</p>
                                     </div>
                                 </div>
                             ))}

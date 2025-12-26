@@ -630,19 +630,28 @@ body {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-tempearature-info .main-weather-icon {
   width: 140px;
   height: auto;
   padding: 1px;
+  flex-shrink: 0;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-tempearature-info .main-weather-icon img {
   width: inherit;
   height: inherit;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-tempearature-info .main-temperature-info {
-  font-size: 60px;
+  font-size: clamp(10px, 8vw, 50px);
   color: hsl(0, 0%, 100%);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-tempearature-info .main-temperature-info p {
+  margin: 0;
+  padding: 0;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-metrics {
   position: relative;

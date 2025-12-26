@@ -1,17 +1,18 @@
 import API from '../config/endpoints.json';
 import axios from 'axios';
-
+// import { useGlobal } from '../utils/global_context'
 interface LocationParams {
     longitude: string;
     latitude: string;
+    timezone: string;
 }
 
-async function getWeatherForecast({longitude, latitude}: LocationParams) {
+async function getWeatherForecast({longitude, latitude, timezone}: LocationParams) {
     const base = API.FORECAST_URI;
     const version = API.VERSION;
     const forecast = API.FORECAST;
     const params = API.FORECAST_FIXED_PARAMS;
-    const url = `${base}/${version}/${forecast}?latitude=${latitude}&longitude=${longitude}&${params}`
+    const url = `${base}/${version}/${forecast}?latitude=${latitude}&longitude=${longitude}&${params}${timezone}`
     const options = {
         method: 'GET',
         url: url,

@@ -757,11 +757,14 @@ body {
                                     display: flex;
                                     flex-direction: row-reverse;
                                     align-items: center;
+                                    gap: 10px;
+                                    flex-shrink: 0;
 
                                     .main-weather-icon {
                                         width: 140px;
                                         height: auto;
                                         padding: 1px;
+                                        flex-shrink: 0;
 
                                         img {
                                             width: inherit;
@@ -770,8 +773,15 @@ body {
                                     }
 
                                     .main-temperature-info {
-                                        font-size: 60px;
+                                        font-size: clamp(10px, 8vw, 50px);
                                         color: $color10;
+                                        white-space: nowrap;
+                                        flex-shrink: 0;
+
+                                        p {
+                                            margin: 0;
+                                            padding: 0;
+                                        }
                                     }
                                 }
                             }

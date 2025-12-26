@@ -64,7 +64,7 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
     const [locationId, setLocationId] = useState<number>(0);
     const [locationName, setLocationName] = useState<string>("no data");
     const [locationCountry, setLocationCountry] = useState<string>("");
-    const [locationTimezone, setLocationTimezone] = useState<string>("");
+    const [locationTimezone, setLocationTimezone] = useState<string>("GMT");
     const [locationLattitude, setLocationLattitude] = useState<number>(0);
     const [locationLongitude, setLocationLongitude] = useState<number>(0);
     const [currWeatherCode, setCurrWeatherCode] = useState<number>(999);
