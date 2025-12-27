@@ -14,7 +14,7 @@ export const NavBar: React.FC = () => {
     const [currUnit, setCurrUnit] = useState<string | undefined>(DEFAULTS.METRIC);
     const [targetUnit, setTargetUnit] = useState<string | undefined>(DEFAULTS.IMPERIAL);
     const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
-    const { isImperial, setIsImperial } = useGlobal();
+    const { isImperial, setIsImperial, isLoading } = useGlobal();
     const dropdownDiv = useRef<HTMLDivElement>(null);
     const dropMenu = useRef<HTMLDivElement>(null);
     const dropdownDisplayButton = useRef<HTMLDivElement>(null);
@@ -69,7 +69,7 @@ export const NavBar: React.FC = () => {
                             <div className="nav-menu-child drop-icon" ref={dropIcon}><img src={drop_icon} alt="" /></div>
                         </div>
                         <div className="drop-menu-container hidden" ref={dropdownDiv}>
-                            <button className='unit-switch dm-sans-500' onClick={changeUnit}>Switch to {targetUnit}</button>
+                            <button className='unit-switch dm-sans-500' onClick={changeUnit} disabled={isLoading}>Switch to {targetUnit}</button>
                             <div className="drop-menu" ref={dropMenu}>
                                 <div className="display-option-for-unit dm-sans-300">
                                     <div className="display-unit display-temp-unit">

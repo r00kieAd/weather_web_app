@@ -47,6 +47,8 @@ interface GlobalState {
     setHourlyData?: (value: HourlyData) => null;
     isLoading: boolean;
     setIsLoading: (value: boolean) => null;
+    forecastDataLoaded: boolean;
+    setforecastDataLoaded: (value: boolean) => null;
 }
 
 const GlobalContext = createContext<GlobalState | undefined>(undefined);
@@ -71,6 +73,7 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
     const [is_day, setIsDay] = useState<number>(1);
     const [hourlyData, setHourlyData] = useState<HourlyData | undefined>(undefined);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [forecastDataLoaded, setforecastDataLoaded] = useState<boolean>(false);
 
     return (
         <GlobalContext.Provider value={{
@@ -111,7 +114,9 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
             is_day,
             setIsDay,
             isLoading,
-            setIsLoading
+            setIsLoading,
+            forecastDataLoaded,
+            setforecastDataLoaded
         } as unknown as GlobalState}>
             {children}
         </GlobalContext.Provider>

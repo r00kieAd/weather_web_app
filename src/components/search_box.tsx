@@ -22,7 +22,7 @@ type SearchBoxProps = {
 
 export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
     const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude, setIsLoading, locationTimezone } = useGlobal();
-    const { setTemperature, setFeelsLike, setHumidity, setWind, setPrecipitation, setCurrWeatherCode, setIsDay } = useGlobal();
+    const { setTemperature, setFeelsLike, setHumidity, setWind, setPrecipitation, setCurrWeatherCode, setIsDay, setforecastDataLoaded, isLoading } = useGlobal();
     const { setHourlyData } = useGlobal();
 
     const [query, setQuery] = useState('')
@@ -132,6 +132,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
 
     async function weatherForecast(place: Place) {
         setIsLoading(true);
+        setforecastDataLoaded(false);
         try {
             const forecast = await getWeatherForecast({ longitude: String(place.longitude), latitude: String(place.latitude), timezone: locationTimezone });
             console.log('Forecast Data:', forecast.resp);
@@ -244,6 +245,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
                                     }}
                                     className="search-input dm-sans-300"
                                     autoComplete="off"
+                                    disabled={isLoading}
                                 />
 
                                 {showSuggestions && loading && (
@@ -285,7 +287,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
                                 type="submit"
                                 aria-label="Search"
                                 className="search-button dm-sans-300"
-                                disabled={loading}
+                                disabled={loading || isLoading}
                             >
                                 {window.screen.width > 700 ? 'Search' : (<><img src={location_pin} alt="search" /></>)}
                             </button>

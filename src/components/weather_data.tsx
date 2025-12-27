@@ -36,7 +36,7 @@ export const WeatherData: React.FC = () => {
     const dropMenuIcon = useRef<HTMLDivElement>(null);
     const daysDrop = useRef<HTMLDivElement>(null);
     const { temperature, feelsLike, humidity, wind, precipitation, locationName, locationCountry, currWeatherCode, is_day, hourlyData } = useGlobal();
-    const { setIsLoading, displayedDay, displayedDate, setDisplayedDay, setDisplayedDate, isImperial, locationTimezone, setLocationTimezone } = useGlobal();
+    const { setIsLoading, displayedDay, displayedDate, setDisplayedDay, setDisplayedDate, isImperial, locationTimezone, setLocationTimezone, forecastDataLoaded, setforecastDataLoaded } = useGlobal();
     const [daysDropVisible, setDaysDropVisible] = useState<boolean>(false);
 
     const getNextSevenDays = (): string[] => {
@@ -124,34 +124,37 @@ export const WeatherData: React.FC = () => {
         }
     };
 
+    // updating data
     useEffect(() => {
         console.log(hourlyData);
         const dummyHourlyData: HourlyForecast[] = [];
         
         const timezone = locationTimezone ? locationTimezone.split(' ')[0] : 'GMT';
         const now = new Date();
-        const timeInTimezone = new Date(now.toLocaleString('en-US', { timeZone: timezone }))
-        const tomorrow = new Date(timeInTimezone);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const tomorrowDateStr = tomorrow.getFullYear() + '-' +
-                                String(tomorrow.getMonth() + 1).padStart(2, '0') + '-' +
-                                String(tomorrow.getDate()).padStart(2, '0');
-        let startIndex = 0;
+        const timeInTimezone = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
+        const currentHour = timeInTimezone.getHours();
+        const nextHour = (currentHour + 1) % 24;
+        
+        const todayDateStr = timeInTimezone.getFullYear() + '-' +
+                             String(timeInTimezone.getMonth() + 1).padStart(2, '0') + '-' +
+                             String(timeInTimezone.getDate()).padStart(2, '0');
+        
+        let nextHourIndex = 0;
         if (hourlyData?.time && hourlyData.time.length > 0) {
             for (let i = 0; i < hourlyData.time.length; i++) {
                 const timeStr = hourlyData.time[i];
                 const dateStr = timeStr.substring(0, 10);
                 const hour = parseInt(timeStr.substring(11, 13));
                 
-                if (dateStr === tomorrowDateStr && hour === 0) {
-                    startIndex = i;
+                if (dateStr === todayDateStr && hour === nextHour) {
+                    nextHourIndex = i;
                     break;
                 }
             }
         }
         
         const forecastDays: string[] = [];
-        let dayDate = new Date(tomorrow);
+        let dayDate = new Date(timeInTimezone);
         for (let d = 0; d < 7; d++) {
             const dayName = dayDate.toLocaleDateString('en-US', { weekday: 'long' });
             forecastDays.push(dayName);
@@ -163,7 +166,7 @@ export const WeatherData: React.FC = () => {
         }
         
         for (let i = 0; i < 8; i++) {
-            const index = startIndex + i;
+            const index = nextHourIndex + i;
             if (hourlyData?.time && index < hourlyData.time.length) {
                 const weatherCode = hourlyData.iconCode?.[index] ?? 999;
                 dummyHourlyData.push({
@@ -183,6 +186,7 @@ export const WeatherData: React.FC = () => {
         setHourlyForecast(dummyHourlyData);
         setTimeout(() => {
             setIsLoading(false);
+            setforecastDataLoaded(true);
         }, 1000);
     }, [hourlyData, locationTimezone]);
 
@@ -233,25 +237,32 @@ export const WeatherData: React.FC = () => {
             setSelectedDay(day);
             closeDaysDrop();
             
-            const timezone = locationTimezone ? locationTimezone.split(' ')[0] : 'UTC';
+            const timezone = locationTimezone ? locationTimezone.split(' ')[0] : 'GMT';
             const now = new Date();
             const timeInTimezone = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
+            const currentHour = timeInTimezone.getHours();
+            const nextHour = (currentHour + 1) % 24;
             
-            // Calculate tomorrow's date
-            const tomorrow = new Date(timeInTimezone);
-            tomorrow.setDate(tomorrow.getDate() + 1);
+            const todayDateStr = timeInTimezone.getFullYear() + '-' +
+                                 String(timeInTimezone.getMonth() + 1).padStart(2, '0') + '-' +
+                                 String(timeInTimezone.getDate()).padStart(2, '0');
             
-            // Find which day was selected (0-6)
             const selectedDayIndex = dummyDays.indexOf(day);
+            const isFirstDay = selectedDayIndex === 0;
             
-            // Calculate the date for the selected day
-            const selectedDate = new Date(tomorrow);
-            selectedDate.setDate(selectedDate.getDate() + selectedDayIndex);
-            const selectedDateStr = selectedDate.getFullYear() + '-' +
-                                    String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
-                                    String(selectedDate.getDate()).padStart(2, '0');
+            let dayStartHour = isFirstDay ? nextHour : 0;
+            let dayDateStr: string;
             
-            // Find index of selected day at 00:00
+            if (isFirstDay) {
+                dayDateStr = todayDateStr;
+            } else {
+                const selectedDate = new Date(timeInTimezone);
+                selectedDate.setDate(selectedDate.getDate() + selectedDayIndex);
+                dayDateStr = selectedDate.getFullYear() + '-' +
+                             String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
+                             String(selectedDate.getDate()).padStart(2, '0');
+            }
+            
             let dayStartIndex = 0;
             if (hourlyData?.time && hourlyData.time.length > 0) {
                 for (let i = 0; i < hourlyData.time.length; i++) {
@@ -259,14 +270,13 @@ export const WeatherData: React.FC = () => {
                     const dateStr = timeStr.substring(0, 10);
                     const hour = parseInt(timeStr.substring(11, 13));
                     
-                    if (dateStr === selectedDateStr && hour === 0) {
+                    if (dateStr === dayDateStr && hour === dayStartHour) {
                         dayStartIndex = i;
                         break;
                     }
                 }
             }
             
-            // Populate with selected day's hours (00:00-07:00)
             const dummyHourlyData: HourlyForecast[] = [];
             for (let i = 0; i < 8; i++) {
                 const index = dayStartIndex + i;
@@ -301,14 +311,14 @@ export const WeatherData: React.FC = () => {
                         <div className="weather-display-container">
                             <div className="main-place-date-info">
                                 <div className="place-info dm-sans-600">{locationName}{locationCountry? `, ${locationCountry}` : ''}</div>
-                                <div className="date-info dm-sans-500">{displayedDay} {displayedDate}</div>
+                                {forecastDataLoaded && <div className="date-info dm-sans-500">{displayedDay} {displayedDate} ({locationTimezone})</div>}
                             </div>
                             <div className="main-tempearature-info">
                                 <div className="main-weather-icon">
                                     <img src={getIconForWeatherCode(currWeatherCode ?? 999, is_day)} alt="" className="main-icon" />
                                 </div>
                                 <div className="main-temperature-info dm-sans-600i">
-                                    <p className='main-temp'>{temperature} {isImperial ? DEFAULTS.FAHRENHEIT : DEFAULTS.CELCIUS}</p>
+                                    {forecastDataLoaded && <p className='main-temp'>{temperature} {isImperial ? DEFAULTS.FAHRENHEIT : DEFAULTS.CELCIUS}</p>}
                                 </div>
                             </div>
                         </div>
@@ -388,7 +398,7 @@ export const WeatherData: React.FC = () => {
                                         <p className="hf-h-time">{hour.time}</p>
                                     </div>
                                     <div className="right-side-data dm-sans-500">
-                                        <p className={`hf-temp hf-d${index + 1}-temp`}>{hour.temp} {isImperial ? DEFAULTS.FAHRENHEIT : DEFAULTS.CELCIUS}</p>
+                                        {forecastDataLoaded && <p className={`hf-temp hf-d${index + 1}-temp`}>{hour.temp} {isImperial ? DEFAULTS.FAHRENHEIT : DEFAULTS.CELCIUS}</p>}
                                     </div>
                                 </div>
                             ))}
