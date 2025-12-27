@@ -36,7 +36,7 @@ export const WeatherData: React.FC = () => {
     const dropMenuIcon = useRef<HTMLDivElement>(null);
     const daysDrop = useRef<HTMLDivElement>(null);
     const { temperature, feelsLike, humidity, wind, precipitation, locationName, locationCountry, currWeatherCode, is_day, hourlyData } = useGlobal();
-    const { setIsLoading, displayedDay, displayedDate, setDisplayedDay, setDisplayedDate, isImperial, locationTimezone, setLocationTimezone } = useGlobal();
+    const { setIsLoading, displayedDay, displayedDate, setDisplayedDay, setDisplayedDate, isImperial, locationTimezone, setLocationTimezone, forecastDataLoaded, setforecastDataLoaded } = useGlobal();
     const [daysDropVisible, setDaysDropVisible] = useState<boolean>(false);
 
     const getNextSevenDays = (): string[] => {
@@ -124,6 +124,7 @@ export const WeatherData: React.FC = () => {
         }
     };
 
+    // updating data
     useEffect(() => {
         console.log(hourlyData);
         const dummyHourlyData: HourlyForecast[] = [];
@@ -185,6 +186,7 @@ export const WeatherData: React.FC = () => {
         setHourlyForecast(dummyHourlyData);
         setTimeout(() => {
             setIsLoading(false);
+            setforecastDataLoaded(true);
         }, 1000);
     }, [hourlyData, locationTimezone]);
 
@@ -309,14 +311,14 @@ export const WeatherData: React.FC = () => {
                         <div className="weather-display-container">
                             <div className="main-place-date-info">
                                 <div className="place-info dm-sans-600">{locationName}{locationCountry? `, ${locationCountry}` : ''}</div>
-                                <div className="date-info dm-sans-500">{displayedDay} {displayedDate} ({locationTimezone})</div>
+                                {forecastDataLoaded && <div className="date-info dm-sans-500">{displayedDay} {displayedDate} ({locationTimezone})</div>}
                             </div>
                             <div className="main-tempearature-info">
                                 <div className="main-weather-icon">
                                     <img src={getIconForWeatherCode(currWeatherCode ?? 999, is_day)} alt="" className="main-icon" />
                                 </div>
                                 <div className="main-temperature-info dm-sans-600i">
-                                    <p className='main-temp'>{temperature} {isImperial ? DEFAULTS.FAHRENHEIT : DEFAULTS.CELCIUS}</p>
+                                    {forecastDataLoaded && <p className='main-temp'>{temperature} {isImperial ? DEFAULTS.FAHRENHEIT : DEFAULTS.CELCIUS}</p>}
                                 </div>
                             </div>
                         </div>
@@ -396,7 +398,7 @@ export const WeatherData: React.FC = () => {
                                         <p className="hf-h-time">{hour.time}</p>
                                     </div>
                                     <div className="right-side-data dm-sans-500">
-                                        <p className={`hf-temp hf-d${index + 1}-temp`}>{hour.temp} {isImperial ? DEFAULTS.FAHRENHEIT : DEFAULTS.CELCIUS}</p>
+                                        {forecastDataLoaded && <p className={`hf-temp hf-d${index + 1}-temp`}>{hour.temp} {isImperial ? DEFAULTS.FAHRENHEIT : DEFAULTS.CELCIUS}</p>}
                                     </div>
                                 </div>
                             ))}
