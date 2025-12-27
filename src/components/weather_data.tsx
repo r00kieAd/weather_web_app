@@ -357,7 +357,7 @@ export const WeatherData: React.FC = () => {
                                     <img src={getIconForWeatherCode(currWeatherCode ?? 999, is_day)} alt="" className="main-icon" />
                                 </div>
                                 <div className="main-temperature-info dm-sans-600i">
-                                    {forecastDataLoaded && <p className='main-temp'>{temperature} {isImperial ? DEFAULTS.FAHRENHEIT : DEFAULTS.CELCIUS}</p>}
+                                    {forecastDataLoaded && <p className='main-temp'>{temperature}{DEFAULTS.DEGREE}</p>}
                                 </div>
                             </div>
                         </div>
@@ -366,7 +366,7 @@ export const WeatherData: React.FC = () => {
                         <div className="weather-metrics-container">
                             <div className="feels-like-metric weather-metrics">
                                 <p className="feels-like-heading stat-name dm-sans-500">Feels Like</p>
-                                <span className="feels-like-data stat-value dm-sans-300">{feelsLike} {isImperial ? DEFAULTS.FAHRENHEIT : DEFAULTS.CELCIUS}</span>
+                                <span className="feels-like-data stat-value dm-sans-300">{feelsLike}{DEFAULTS.DEGREE}</span>
                             </div>
                             <div className="humidity-metric weather-metrics">
                                 <p className="humidity-heading stat-name dm-sans-500">Humidity</p>
@@ -395,8 +395,8 @@ export const WeatherData: React.FC = () => {
                                             <img src={getIconForWeatherCode(Number(day.icon), 1)} alt={day.day} />
                                         </div>
                                         <div className={`df-temps df-temps-d${index + 1}`}>
-                                            <p className={`df${index + 1}-max dm-sans-500`}>{day.maxTemp ? day.maxTemp : 0}</p>
-                                            <p className={`df${index + 1}-min dm-sans-500`}>{day.minTemp ? day.minTemp : 0}</p>
+                                            <p className={`df${index + 1}-max dm-sans-500`}>{day.maxTemp ? day.maxTemp : 0}{DEFAULTS.DEGREE}</p>
+                                            <p className={`df${index + 1}-min dm-sans-500`}>{day.minTemp ? day.minTemp : 0}{DEFAULTS.DEGREE}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -437,7 +437,7 @@ export const WeatherData: React.FC = () => {
                                         <p className="hf-h-time">{hour.time}</p>
                                     </div>
                                     <div className="right-side-data dm-sans-500">
-                                        {forecastDataLoaded && <p className={`hf-temp hf-d${index + 1}-temp`}>{hour.temp} {isImperial ? DEFAULTS.FAHRENHEIT : DEFAULTS.CELCIUS}</p>}
+                                        {forecastDataLoaded && <p className={`hf-temp hf-d${index + 1}-temp`}>{hour.temp}{DEFAULTS.DEGREE}</p>}
                                     </div>
                                 </div>
                             ))}
