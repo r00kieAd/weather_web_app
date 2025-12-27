@@ -1,4 +1,5 @@
 import { createContext, useState, useContext } from "react";
+import DEFAULTS from '../config/defaults.json';
 import type { ReactNode } from "react";
 
 interface HourlyData {
@@ -26,8 +27,8 @@ interface GlobalState {
     setDisplayedDate: (value: string) => null;
     temperature: number;
     setTemperature: (value: number) => null;
-    feelsLike: string;
-    setFeelsLike: (value: string) => null;
+    feelsLike: number;
+    setFeelsLike: (value: number) => null;
     humidity: string;
     setHumidity: (value: string) => null;
     wind: number;
@@ -58,6 +59,12 @@ interface GlobalState {
     setIsLoading: (value: boolean) => null;
     forecastDataLoaded: boolean;
     setforecastDataLoaded: (value: boolean) => null;
+    currUnit: string;
+    setCurrUnit: (value: string) => null;
+    targetUnit: string;
+    setTargetUnit: (value: string) => null;
+    unitChanged: boolean;
+    setUnitChanged: (value: boolean) => null;
 }
 
 const GlobalContext = createContext<GlobalState | undefined>(undefined);
@@ -68,7 +75,7 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
     const [displayedDay, setDisplayedDay] = useState<string>("no data");
     const [displayedDate, setDisplayedDate] = useState<string>("no data");
     const [temperature, setTemperature] = useState<number>(0);
-    const [feelsLike, setFeelsLike] = useState<string>("0");
+    const [feelsLike, setFeelsLike] = useState<number>(0);
     const [humidity, setHumidity] = useState<string>("0");
     const [wind, setWind] = useState<number>(0);
     const [precipitation, setPrecipitation] = useState<number>(0);
@@ -84,6 +91,9 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
     const [dailyData, setDailyData] = useState<DailyData | undefined>(undefined);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [forecastDataLoaded, setforecastDataLoaded] = useState<boolean>(false);
+    const [currUnit, setCurrUnit] = useState<string>(DEFAULTS.METRIC);
+    const [targetUnit, setTargetUnit] = useState<string | undefined>(DEFAULTS.IMPERIAL);
+    const [unitChanged, setUnitChanged] = useState<boolean>(false);
 
     return (
         <GlobalContext.Provider value={{
@@ -128,7 +138,13 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
             forecastDataLoaded,
             setforecastDataLoaded,
             dailyData,
-            setDailyData
+            setDailyData,
+            currUnit,
+            setCurrUnit,
+            targetUnit,
+            setTargetUnit,
+            unitChanged,
+            setUnitChanged
         } as unknown as GlobalState}>
             {children}
         </GlobalContext.Provider>

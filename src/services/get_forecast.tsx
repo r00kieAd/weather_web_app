@@ -4,7 +4,7 @@ import axios from 'axios';
 interface LocationParams {
     longitude: string;
     latitude: string;
-    timezone: string;
+    timezone: string;    
 }
 
 async function getWeatherForecast({longitude, latitude, timezone}: LocationParams) {
