@@ -8,6 +8,13 @@ interface HourlyData {
     is_day: number[];
 }
 
+interface DailyData {
+    time: string[];
+    maxTemp: number[];
+    minTemp: number[];
+    iconCode: number[];
+}
+
 interface GlobalState {
     isImperial: boolean;
     setIsImperial: (value: boolean) => null;
@@ -44,7 +51,9 @@ interface GlobalState {
     locationTimezone: string;
     setLocationTimezone: (value: string) => null;
     hourlyData?: HourlyData;
-    setHourlyData?: (value: HourlyData) => null;
+    setHourlyData: (value: HourlyData) => null;
+    dailyData?: DailyData;
+    setDailyData: (value: DailyData) => null;
     isLoading: boolean;
     setIsLoading: (value: boolean) => null;
     forecastDataLoaded: boolean;
@@ -72,6 +81,7 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
     const [currWeatherCode, setCurrWeatherCode] = useState<number>(999);
     const [is_day, setIsDay] = useState<number>(1);
     const [hourlyData, setHourlyData] = useState<HourlyData | undefined>(undefined);
+    const [dailyData, setDailyData] = useState<DailyData | undefined>(undefined);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [forecastDataLoaded, setforecastDataLoaded] = useState<boolean>(false);
 
@@ -116,7 +126,9 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
             isLoading,
             setIsLoading,
             forecastDataLoaded,
-            setforecastDataLoaded
+            setforecastDataLoaded,
+            dailyData,
+            setDailyData
         } as unknown as GlobalState}>
             {children}
         </GlobalContext.Provider>

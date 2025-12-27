@@ -1,4 +1,4 @@
-<h1 style="font-size: 30px; display: flex; align-items: center; gap: 10px;">Weather Now <img src="public/favicon.png" alt="Weather App Logo" style="height: 30px; width: 30px;"></h1>
+<h1 style="font-size: 30px; display: flex; align-items: center; gap: 10px;">Weather Now <img src="public/favicon.png" alt="Weather App Logo" style="height: 30px; width: 30px; margin-top: 5px;"></h1>
 
 **Status: Work in Progress**
 
