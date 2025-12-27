@@ -21,7 +21,7 @@ type SearchBoxProps = {
 }
 
 export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
-    const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude, setIsLoading, locationTimezone } = useGlobal();
+    const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude, setIsLoading, locationTimezone, setDailyData } = useGlobal();
     const { setTemperature, setFeelsLike, setHumidity, setWind, setPrecipitation, setCurrWeatherCode, setIsDay, setforecastDataLoaded, isLoading } = useGlobal();
     const { setHourlyData } = useGlobal();
 
@@ -130,6 +130,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
         weatherForecast(place);
     }
 
+    // getting and setting data here
     async function weatherForecast(place: Place) {
         setIsLoading(true);
         setforecastDataLoaded(false);
@@ -149,6 +150,12 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
             const hourly_codes = forecast.resp.hourly.weather_code;
             const is_day = forecast.resp.hourly.is_day;
             if (setHourlyData) setHourlyData({time: hourly_times, temperature_2m: hourly_temps, iconCode: hourly_codes, is_day: is_day});
+            const daily_time = forecast.resp.daily.time;
+            const daily_min_temp = forecast.resp.daily.temperature_2m_min;
+            const daily_max_temp = forecast.resp.daily.temperature_2m_max;
+            const daily_codes = forecast.resp.daily.weather_code;
+            if (setDailyData) setDailyData({time: daily_time, minTemp: daily_min_temp, maxTemp: daily_max_temp, iconCode: daily_codes})
+            
         } catch (err) {
             alert('Error while fetching data, please try again');
             setIsLoading(false);

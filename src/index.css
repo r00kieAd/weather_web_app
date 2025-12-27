@@ -655,6 +655,7 @@ body {
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-metrics {
   position: relative;
+  margin: 10px 0 25px 0;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-metrics .weather-metrics-container {
   display: flex;
@@ -680,7 +681,60 @@ body {
   color: hsl(250, 6%, 84%);
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-metrics .weather-metrics-container .weather-metrics .stat-value {
-  font-size: 28px;
+  font-size: 25px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-heading p {
+  color: hsl(250, 6%, 84%);
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-container {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-self: center;
+  padding: 5px 0;
+  border: 1px solid transparent;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-container .daily-forecast {
+  width: 90px;
+  height: auto;
+  background-color: hsl(243, 27%, 20%);
+  border: 1px solid transparent;
+  border-radius: 7px;
+  padding: 0px 10px;
+  margin: 0;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-container .daily-forecast .inner-daily-forecast-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-container .daily-forecast .inner-daily-forecast-wrap .day {
+  font-size: 14px;
+  color: hsl(250, 6%, 84%);
+  line-height: 5px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-container .daily-forecast .inner-daily-forecast-wrap .df-icon {
+  width: 30px;
+  height: auto;
+  padding: 5px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-container .daily-forecast .inner-daily-forecast-wrap .df-icon img {
+  width: inherit;
+  height: inherit;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-container .daily-forecast .inner-daily-forecast-wrap .df-temps {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: hsl(250, 6%, 84%);
+  line-height: 1px;
+  font-size: 12px;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 {
   flex-grow: 1;

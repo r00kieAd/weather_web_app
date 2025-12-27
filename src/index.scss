@@ -290,6 +290,7 @@ body {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
         img {
             width: 50px;
             height: 50px;
@@ -789,6 +790,7 @@ body {
 
                         .main-weather-metrics {
                             position: relative;
+                            margin: 10px 0 25px 0;
 
                             .weather-metrics-container {
                                 display: flex;
@@ -815,7 +817,70 @@ body {
                                     }
 
                                     .stat-value {
-                                        font-size: 28px;
+                                        font-size: 25px;
+                                    }
+                                }
+                            }
+                        }
+
+                        .main-daily-forecast {
+
+                            .daily-forecast-heading {
+                                p {
+                                    color: $color12;
+                                }
+                            }
+
+                            .daily-forecast-container {
+                                position: relative;
+                                display: flex;
+                                flex-wrap: wrap;
+                                gap: 18px;
+                                justify-self: center;
+                                padding: 5px 0;
+                                border: 1px solid transparent;
+
+                                .daily-forecast {
+                                    width: 90px;
+                                    // height: 100px;
+                                    height: auto;
+                                    background-color: $color7;
+                                    border: 1px solid transparent;
+                                    border-radius: $mainBorderRadius;
+                                    padding: 0px 10px;
+                                    margin: 0;
+
+                                    .inner-daily-forecast-wrap {
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        flex-direction: column;
+                                        .day {
+                                            font-size: 14px;
+                                            color: $color12;
+                                            line-height: 5px;
+                                        }
+                                        .df-icon {
+                                            width: 30px;
+                                            height: auto;
+                                            padding: 5px;
+                                            img {
+                                                width: inherit;
+                                                height: inherit;
+                                            }
+                                        }
+                                        .df-temps {
+                                            position: relative;
+                                            display: flex;
+                                            justify-content: space-between;
+                                            width: 90%;
+                                            box-sizing: border-box;
+                                            margin: 0;
+                                            padding: 0;
+                                            color: $color12;
+                                            line-height: 1px;
+                                            font-size: 12px;
+                                        }
                                     }
                                 }
                             }
