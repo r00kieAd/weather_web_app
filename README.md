@@ -1,4 +1,4 @@
-<h1 style="font-size: 30px; display: flex; align-items: center; gap: 10px;">Weather Now <img src="public/favicon.png" alt="Weather App Logo" style="height: 30px; width: 30px; margin-top: 5px;"></h1>
+<h1 style="font-size: 30px; display: flex; align-items: center; gap: 10px;">Weather Now <img src="public/favicon.png" alt="Weather App Logo" style="height: 30px; width: 30px; margin-top: 10px;"></h1>
 
 **Status: Work in Progress**
 
@@ -31,6 +31,5 @@ The application is organized with clear separation of concerns:
 
 ## Todos
 
-1. Add Daily forecast
-2. Change Units and it's values
+2. Change Units and it's values (Imperial and Metric Switch)
 2. Test UI in different screens
