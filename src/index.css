@@ -716,7 +716,7 @@ body {
   line-height: 5px;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-container .daily-forecast .inner-daily-forecast-wrap .df-icon {
-  width: 30px;
+  width: 50px;
   height: auto;
   padding: 5px;
 }
@@ -734,7 +734,7 @@ body {
   padding: 0;
   color: hsl(250, 6%, 84%);
   line-height: 1px;
-  font-size: 12px;
+  font-size: 14px;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 {
   flex-grow: 1;

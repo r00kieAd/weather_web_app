@@ -1,8 +1,7 @@
 {
     "METRIC": "Metric",
     "IMPERIAL": "Imperial",
-    "CELCIUS": "°C",
-    "FAHRENHEIT": "°F",
+    "DEGREE": "°",
     "KMPH": "kmph",
     "MPH": "mph",
     "MM": "mm",
