@@ -11,25 +11,18 @@ import { useGlobal } from '../utils/global_context'
 
 export const NavBar: React.FC = () => {
 
-    const [currUnit, setCurrUnit] = useState<string | undefined>(DEFAULTS.METRIC);
-    const [targetUnit, setTargetUnit] = useState<string | undefined>(DEFAULTS.IMPERIAL);
     const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
-    const { isImperial, setIsImperial, isLoading } = useGlobal();
+    const { isImperial, setIsImperial, isLoading, targetUnit, setTargetUnit, setCurrUnit, currUnit, unitChanged, setUnitChanged } = useGlobal();
     const dropdownDiv = useRef<HTMLDivElement>(null);
     const dropMenu = useRef<HTMLDivElement>(null);
     const dropdownDisplayButton = useRef<HTMLDivElement>(null);
     const dropIcon = useRef<HTMLDivElement>(null);
 
     function changeUnit() {
-        if (currUnit == DEFAULTS.METRIC) {
-            setCurrUnit(DEFAULTS.IMPERIAL);
-            setTargetUnit(DEFAULTS.METRIC)
-            setIsImperial(true);
-        } else {
-            setCurrUnit(DEFAULTS.METRIC);
-            setTargetUnit(DEFAULTS.IMPERIAL);
-            setIsImperial(false);
-        }
+        setIsImperial(!isImperial);
+        setCurrUnit(currUnit == DEFAULTS.METRIC ? DEFAULTS.IMPERIAL : DEFAULTS.METRIC);
+        setTargetUnit(targetUnit == DEFAULTS.METRIC ? DEFAULTS.IMPERIAL : DEFAULTS.METRIC);
+        if (!unitChanged) setUnitChanged(true);
     }
 
     function displayDropdown() {
