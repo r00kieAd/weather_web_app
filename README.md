@@ -31,5 +31,5 @@ The application is organized with clear separation of concerns:
 
 ## Todos
 
-2. Change Units and it's values (Imperial and Metric Switch)
-2. Test UI in different screens
+1. Test UI in different screens
+2. Improve and Optimize UI/UX
