@@ -661,6 +661,7 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  gap: 10px;
   justify-content: space-around;
   height: 80px;
   box-sizing: border-box;
@@ -683,6 +684,12 @@ body {
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-metrics .weather-metrics-container .weather-metrics .stat-value {
   font-size: 25px;
 }
+@media screen and (max-width: 500px) {
+  #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast {
+    margin-top: 8rem;
+    width: 100%;
+  }
+}
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-heading p {
   color: hsl(250, 6%, 84%);
 }
@@ -695,6 +702,13 @@ body {
   padding: 5px 0;
   border: 1px solid transparent;
 }
+@media screen and (max-width: 500px) {
+  #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-container {
+    width: inherit;
+    justify-content: space-evenly;
+    gap: 10px;
+  }
+}
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-container .daily-forecast {
   width: 90px;
   height: auto;
@@ -703,6 +717,11 @@ body {
   border-radius: 7px;
   padding: 0px 10px;
   margin: 0;
+}
+@media screen and (max-width: 500px) {
+  #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-container .daily-forecast {
+    width: 70px;
+  }
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-container .daily-forecast .inner-daily-forecast-wrap {
   display: flex;
@@ -719,6 +738,12 @@ body {
   width: 50px;
   height: auto;
   padding: 5px;
+}
+@media screen and (max-width: 500px) {
+  #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-container .daily-forecast .inner-daily-forecast-wrap .df-icon {
+    width: 25px;
+    padding: 1px;
+  }
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-daily-forecast .daily-forecast-container .daily-forecast .inner-daily-forecast-wrap .df-icon img {
   width: inherit;
