@@ -33,3 +33,8 @@ The application is organized with clear separation of concerns:
 
 1. Test UI in different screens
 2. Improve and Optimize UI/UX
+
+## Issues
+
+1. Won't work on outdated or selective network/timezoned mobile devices. "A TLS error caused the secure connection to fail".
+2. Safari Browsers don't load the search component.
