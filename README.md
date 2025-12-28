@@ -33,6 +33,7 @@ The application is organized with clear separation of concerns:
 
 1. Test UI in different screens
 2. Improve and Optimize UI/UX
+3. Automatic Location Detection
 
 ## Issues
 
