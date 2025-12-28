@@ -216,7 +216,6 @@ export const WeatherData: React.FC = () => {
 
                 dailyStartDate.setDate(dailyStartDate.getDate() + 1);
             }
-            console.log(dummyDailyData);
             setDailyForecast(dummyDailyData);
         }
 
@@ -403,16 +402,32 @@ export const WeatherData: React.FC = () => {
                             <p className="df-heading dm-sans-500">{forecastDataLoaded ? 'Daily Forecast' : isLoading ? 'Loading Daily Forecast...' : 'Daily Forecast'}</p>
                         </div>
                         <div className="daily-forecast-container">
-                            {dailyForecast.map((day, index) => (
+                            {dailyForecast.length > 0 ? dailyForecast.slice(0,5).map((day: ForecastDay, index: number) => {
+                                const shortName = day?.day ? day.day.slice(0,3) : 'NA';
+                                return (
+                                    <div key={index} className={`daily-forecast daily-forcast-day-${index + 1}`}>
+                                        <div className="inner-daily-forecast-wrap">
+                                            <p className="day dm-sans-500">{shortName}</p>
+                                            <div className={`df-icon df-icon-d${index + 1} dm-sans-300`}>
+                                                <img src={getIconForWeatherCode(Number(day.icon), 1)} alt={shortName} />
+                                            </div>
+                                            <div className={`df-temps df-temps-d${index + 1}`}>
+                                                <p className={`df${index + 1}-max dm-sans-500`}>{day.maxTemp !== undefined ? temperatureUnit(day.maxTemp) : 0}{DEFAULTS.DEGREE}</p>
+                                                <p className={`df${index + 1}-min dm-sans-500`}>{day.minTemp !== undefined ? temperatureUnit(day.minTemp) : 0}{DEFAULTS.DEGREE}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            }) : dummyDays.slice(0,5).map((dayName: string, index: number) => (
                                 <div key={index} className={`daily-forecast daily-forcast-day-${index + 1}`}>
                                     <div className="inner-daily-forecast-wrap">
-                                        <p className="day dm-sans-500">{day ? day.day : 'NA'}</p>
+                                        <p className="day dm-sans-500">NA</p>
                                         <div className={`df-icon df-icon-d${index + 1} dm-sans-300`}>
-                                            <img src={getIconForWeatherCode(Number(day.icon), 1)} alt={day.day} />
+                                            <img src={empty} alt={dayName} />
                                         </div>
                                         <div className={`df-temps df-temps-d${index + 1}`}>
-                                            <p className={`df${index + 1}-max dm-sans-500`}>{day.maxTemp ? temperatureUnit(day.maxTemp) : 0}{DEFAULTS.DEGREE}</p>
-                                            <p className={`df${index + 1}-min dm-sans-500`}>{day.minTemp ? temperatureUnit(day.minTemp) : 0}{DEFAULTS.DEGREE}</p>
+                                            <p className={`df${index + 1}-max dm-sans-500`}></p>
+                                            <p className={`df${index + 1}-min dm-sans-500`}></p>
                                         </div>
                                     </div>
                                 </div>

@@ -796,6 +796,7 @@ body {
                                 display: flex;
                                 flex-direction: row;
                                 flex-wrap: wrap;
+                                gap: 10px;
                                 justify-content: space-around;
                                 height: 80px;
                                 box-sizing: border-box;
@@ -825,6 +826,11 @@ body {
 
                         .main-daily-forecast {
 
+                            @media screen and (max-width: 500px) {
+                                margin-top: 8rem;
+                                width: 100%;
+                            }
+
                             .daily-forecast-heading {
                                 p {
                                     color: $color12;
@@ -840,9 +846,14 @@ body {
                                 padding: 5px 0;
                                 border: 1px solid transparent;
 
+                                @media screen and (max-width: 500px) {
+                                    width: inherit;
+                                    justify-content: space-evenly;
+                                    gap: 10px;
+                                }
+
                                 .daily-forecast {
                                     width: 90px;
-                                    // height: 100px;
                                     height: auto;
                                     background-color: $color7;
                                     border: 1px solid transparent;
@@ -850,25 +861,38 @@ body {
                                     padding: 0px 10px;
                                     margin: 0;
 
+                                    @media screen and (max-width: 500px) {
+                                        width: 70px;
+                                    }
+
                                     .inner-daily-forecast-wrap {
                                         display: flex;
                                         align-items: center;
                                         justify-content: center;
                                         flex-direction: column;
+
                                         .day {
                                             font-size: 14px;
                                             color: $color12;
                                             line-height: 5px;
                                         }
+
                                         .df-icon {
                                             width: 50px;
                                             height: auto;
                                             padding: 5px;
+
+                                            @media screen and (max-width: 500px) {
+                                                width: 25px;
+                                                padding: 1px;
+                                            }
+
                                             img {
                                                 width: inherit;
                                                 height: inherit;
                                             }
                                         }
+
                                         .df-temps {
                                             position: relative;
                                             display: flex;
