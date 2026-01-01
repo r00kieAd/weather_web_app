@@ -65,6 +65,8 @@ interface GlobalState {
     setTargetUnit: (value: string) => null;
     unitChanged: boolean;
     setUnitChanged: (value: boolean) => null;
+    aqiData: number;
+    setAqiData: (value: number) => null;
 }
 
 const GlobalContext = createContext<GlobalState | undefined>(undefined);
@@ -94,6 +96,7 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
     const [currUnit, setCurrUnit] = useState<string>(DEFAULTS.METRIC);
     const [targetUnit, setTargetUnit] = useState<string | undefined>(DEFAULTS.IMPERIAL);
     const [unitChanged, setUnitChanged] = useState<boolean>(false);
+    const [aqiData, setAqiData] = useState<number>(-1);
 
     return (
         <GlobalContext.Provider value={{
@@ -144,7 +147,9 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
             targetUnit,
             setTargetUnit,
             unitChanged,
-            setUnitChanged
+            setUnitChanged,
+            aqiData,
+            setAqiData
         } as unknown as GlobalState}>
             {children}
         </GlobalContext.Provider>

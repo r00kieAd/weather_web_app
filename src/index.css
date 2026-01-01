@@ -618,6 +618,13 @@ body {
   height: 250px;
   padding: 0 0 0 30px;
 }
+@media screen and (max-width: 500px) {
+  #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container {
+    flex-direction: column;
+    padding: 15px 0 0 0;
+    justify-content: center;
+  }
+}
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-place-date-info .place-info {
   font-size: 30px;
   color: hsl(0, 0%, 100%);
@@ -652,6 +659,12 @@ body {
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-tempearature-info .main-temperature-info p {
   margin: 0;
   padding: 0;
+}
+@media screen and (max-width: 500px) {
+  #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-display .weather-display-container .main-tempearature-info .main-temperature-info {
+    font-size: 20px;
+    margin: 5px;
+  }
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1 .main-weather-metrics {
   position: relative;
@@ -764,6 +777,25 @@ body {
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 {
   flex-grow: 1;
   position: relative;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .aqi-container {
+  position: relative;
+  margin-bottom: 10px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .aqi-container .child-aqi-container {
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background-color: hsl(243, 27%, 20%);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  font-size: 14px;
+  margin: 10px 0 0 0;
+  padding: 0 10px;
+  box-sizing: border-box;
+  height: 40px;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast {
   border: 1px solid transparent;
