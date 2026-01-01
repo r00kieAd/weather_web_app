@@ -36,8 +36,10 @@ export const WeatherData: React.FC = () => {
     const dropMenuIcon = useRef<HTMLDivElement>(null);
     const daysDrop = useRef<HTMLDivElement>(null);
     const { temperature, feelsLike, humidity, wind, precipitation, locationName, locationCountry, currWeatherCode, is_day, hourlyData, dailyData, isLoading, unitChanged } = useGlobal();
-    const { setIsLoading, displayedDay, displayedDate, setDisplayedDay, setDisplayedDate, isImperial, locationTimezone, forecastDataLoaded, setforecastDataLoaded } = useGlobal();
+    const { setIsLoading, displayedDay, displayedDate, setDisplayedDay, setDisplayedDate, isImperial, locationTimezone, forecastDataLoaded, setforecastDataLoaded, aqiData } = useGlobal();
     const [daysDropVisible, setDaysDropVisible] = useState<boolean>(false);
+    const [aqiStatus, setAqiStatus] = useState<string>("n/a");
+    const [aqiColorCode, setAqiColorCode] = useState<string>("#9E9E9E");
 
     const getNextSevenDays = (): string[] => {
         const days: string[] = [];
@@ -228,7 +230,37 @@ export const WeatherData: React.FC = () => {
         }, 1000);
     }, [hourlyData, locationTimezone, dailyData]);
 
-
+    // aqi
+    useEffect(() => {
+        if (aqiData === -2) {
+            setAqiStatus("Error");
+            setAqiColorCode("#D32F2F");
+        } else if (aqiData === -1) {
+            setAqiStatus("No Data");
+            setAqiColorCode("#9E9E9E");
+        } else if (aqiData >= 0 && aqiData <= 50) {
+            setAqiStatus("Good");
+            setAqiColorCode("#00E400");
+        } else if (aqiData <= 100) {
+            setAqiStatus("Moderate");
+            setAqiColorCode("#FFFF00");
+        } else if (aqiData <= 150) {
+            setAqiStatus("Cautionary");
+            setAqiColorCode("#FF7E00");
+        } else if (aqiData <= 200) {
+            setAqiStatus("Unhealthy");
+            setAqiColorCode("#FF0000");
+        } else if (aqiData <= 300) {
+            setAqiStatus("Very Unhealthy");
+            setAqiColorCode("#8F3F97");
+        } else if (aqiData <= 500) {
+            setAqiStatus("Hazardous ☠️");
+            setAqiColorCode("#7E0023");
+        } else {
+            setAqiStatus("Out of Range");
+            setAqiColorCode("#000000");
+        }
+    }, [aqiData]);
 
     const temperatureUnit = (temp: number) => {
         if (!unitChanged) return temp;
@@ -402,8 +434,8 @@ export const WeatherData: React.FC = () => {
                             <p className="df-heading dm-sans-500">{forecastDataLoaded ? 'Daily Forecast' : isLoading ? 'Loading Daily Forecast...' : 'Daily Forecast'}</p>
                         </div>
                         <div className="daily-forecast-container">
-                            {dailyForecast.length > 0 ? dailyForecast.slice(0,5).map((day: ForecastDay, index: number) => {
-                                const shortName = day?.day ? day.day.slice(0,3) : 'NA';
+                            {dailyForecast.length > 0 ? dailyForecast.slice(0, 5).map((day: ForecastDay, index: number) => {
+                                const shortName = day?.day ? day.day.slice(0, 3) : 'NA';
                                 return (
                                     <div key={index} className={`daily-forecast daily-forcast-day-${index + 1}`}>
                                         <div className="inner-daily-forecast-wrap">
@@ -418,7 +450,7 @@ export const WeatherData: React.FC = () => {
                                         </div>
                                     </div>
                                 );
-                            }) : dummyDays.slice(0,5).map((dayName: string, index: number) => (
+                            }) : dummyDays.slice(0, 5).map((dayName: string, index: number) => (
                                 <div key={index} className={`daily-forecast daily-forcast-day-${index + 1}`}>
                                     <div className="inner-daily-forecast-wrap">
                                         <p className="day dm-sans-500">NA</p>
@@ -437,6 +469,12 @@ export const WeatherData: React.FC = () => {
                 </div>
                 <div className="weather-component weather-component-2">
                     <ShowLoading />
+                    <div className='aqi-container'>
+                        <div className="child-aqi-container">
+                            <div className="aqi-lable dm-sans-500">Air Qualtiy</div>
+                            <div className="aqi-stat dm-sans-600" style={{ color: aqiColorCode }}>{aqiStatus}</div>
+                        </div>
+                    </div>
                     <div className="weather-data hourly-forecast">
                         <div className="hourly-forecast-headers">
                             <span className="hf-heading dm-sans-500">Hourly Forecast</span>

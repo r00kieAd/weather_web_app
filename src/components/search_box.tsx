@@ -6,6 +6,7 @@ import initiateSearch from '../services/location_fetcher'
 import getWeatherForecast from '../services/get_forecast'
 import location_pin from '../assets/location-pin.svg'
 import SplitText from './split'
+import getAirQualityIndex from '../services/get_aqi'
 
 type Place = {
     id: number
@@ -23,8 +24,7 @@ type SearchBoxProps = {
 export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
     const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude, setIsLoading, locationTimezone, setDailyData } = useGlobal();
     const { setTemperature, setFeelsLike, setHumidity, setWind, setPrecipitation, setCurrWeatherCode, setIsDay, setforecastDataLoaded, isLoading } = useGlobal();
-    const { setHourlyData } = useGlobal();
-
+    const { setHourlyData, setAqiData } = useGlobal();
     const [query, setQuery] = useState('')
     const [suggestions, setSuggestions] = useState<Place[]>([])
     const [loading, setLoading] = useState(false)
@@ -136,7 +136,12 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
         setforecastDataLoaded(false);
         try {
             const forecast = await getWeatherForecast({ longitude: String(place.longitude), latitude: String(place.latitude), timezone: locationTimezone });
-            console.log('Forecast Data:', forecast.resp);
+            if (!forecast.status) {
+                setLocationName("Error")
+                setLocationCountry("");
+                setIsLoading(false);
+                return;
+            }
             setTemperature(forecast.resp.current.temperature_2m);
             setFeelsLike(forecast.resp.current.apparent_temperature);
             setHumidity(forecast.resp.current.relative_humidity_2m);
@@ -149,13 +154,15 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
             const hourly_times = forecast.resp.hourly.time;
             const hourly_codes = forecast.resp.hourly.weather_code;
             const is_day = forecast.resp.hourly.is_day;
-            if (setHourlyData) setHourlyData({time: hourly_times, temperature_2m: hourly_temps, iconCode: hourly_codes, is_day: is_day});
+            if (setHourlyData) setHourlyData({ time: hourly_times, temperature_2m: hourly_temps, iconCode: hourly_codes, is_day: is_day });
             const daily_time = forecast.resp.daily.time;
             const daily_min_temp = forecast.resp.daily.temperature_2m_min;
             const daily_max_temp = forecast.resp.daily.temperature_2m_max;
             const daily_codes = forecast.resp.daily.weather_code;
-            if (setDailyData) setDailyData({time: daily_time, minTemp: daily_min_temp, maxTemp: daily_max_temp, iconCode: daily_codes})
-            
+            if (setDailyData) setDailyData({ time: daily_time, minTemp: daily_min_temp, maxTemp: daily_max_temp, iconCode: daily_codes })
+
+            const aqi_data = await getAirQualityIndex({ longitude: String(place.longitude), latitude: String(place.latitude), timezone: locationTimezone })
+            setAqiData(aqi_data.status ? aqi_data.resp.current.us_aqi : -2); 
         } catch (err) {
             alert('Error while fetching data, please try again');
             setIsLoading(false);
