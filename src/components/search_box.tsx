@@ -24,7 +24,7 @@ type SearchBoxProps = {
 export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
     const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude, setIsLoading, locationTimezone, setDailyData } = useGlobal();
     const { setTemperature, setFeelsLike, setHumidity, setWind, setPrecipitation, setCurrWeatherCode, setIsDay, setforecastDataLoaded, isLoading } = useGlobal();
-    const { setHourlyData, setAqiData } = useGlobal();
+    const { setHourlyData, setAqiData, setPM10, setPM2_5, setDust } = useGlobal();
     const [query, setQuery] = useState('')
     const [suggestions, setSuggestions] = useState<Place[]>([])
     const [loading, setLoading] = useState(false)
@@ -162,7 +162,10 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
             if (setDailyData) setDailyData({ time: daily_time, minTemp: daily_min_temp, maxTemp: daily_max_temp, iconCode: daily_codes })
 
             const aqi_data = await getAirQualityIndex({ longitude: String(place.longitude), latitude: String(place.latitude), timezone: locationTimezone })
-            setAqiData(aqi_data.status ? aqi_data.resp.current.us_aqi : -2); 
+            setAqiData(aqi_data.status ? aqi_data.resp.current.us_aqi : -2);
+            setPM10(aqi_data.status ? aqi_data.resp.current.pm10 : 0);
+            setPM2_5(aqi_data.status ? aqi_data.resp.current.pm2_5 : 0);
+            setDust(aqi_data.status ? aqi_data.resp.current.dust : 0);
         } catch (err) {
             alert('Error while fetching data, please try again');
             setIsLoading(false);

@@ -7,5 +7,5 @@
     "FORECAST": "forecast",
     "AIR_QUALITY": "air-quality",
     "FORECAST_FIXED_PARAMS": "daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m,weather_code&current=temperature_2m,relative_humidity_2m,precipitation,is_day,wind_speed_10m,apparent_temperature,weather_code&timezone=",
-    "AQI_PARAMS": "current=us_aqi&domains=cams_global&timezone="
+    "AQI_PARAMS": "current=us_aqi,dust,pm10,pm2_5&domains=cams_global&timezone="
 }
