@@ -792,10 +792,24 @@ body {
   align-items: center;
   position: relative;
   font-size: 14px;
-  margin: 10px 0 0 0;
-  padding: 0 10px;
+  margin: 1px 0 0 0;
+  padding: 5px 10px;
   box-sizing: border-box;
-  height: 40px;
+  height: 170px;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .aqi-container .child-aqi-container .aqi-label, #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .aqi-container .child-aqi-container .aqi-stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: center;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .aqi-container .child-aqi-container .aqi-label span, #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .aqi-container .child-aqi-container .aqi-stat span {
+  width: 100%;
+  margin: 5px 0;
+}
+#app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .aqi-container .child-aqi-container .aqi-stat {
+  text-align: right;
+  color: hsl(240, 6%, 70%);
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 .hourly-forecast {
   border: 1px solid transparent;

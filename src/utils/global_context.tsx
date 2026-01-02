@@ -67,6 +67,12 @@ interface GlobalState {
     setUnitChanged: (value: boolean) => null;
     aqiData: number;
     setAqiData: (value: number) => null;
+    PM10: number;
+    setPM10: (value: number) => null;
+    PM2_5: number;
+    setPM2_5: (value: number) => null;
+    dust: number;
+    setDust: (value: number) => null;
 }
 
 const GlobalContext = createContext<GlobalState | undefined>(undefined);
@@ -97,6 +103,9 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
     const [targetUnit, setTargetUnit] = useState<string | undefined>(DEFAULTS.IMPERIAL);
     const [unitChanged, setUnitChanged] = useState<boolean>(false);
     const [aqiData, setAqiData] = useState<number>(-1);
+    const [PM10, setPM10] = useState<number>(0);
+    const [PM2_5, setPM2_5] = useState<number>(0);
+    const [dust, setDust] = useState<number>(0);
 
     return (
         <GlobalContext.Provider value={{
@@ -149,7 +158,13 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
             unitChanged,
             setUnitChanged,
             aqiData,
-            setAqiData
+            setAqiData,
+            PM10,
+            setPM10,
+            PM2_5,
+            setPM2_5,
+            dust,
+            setDust
         } as unknown as GlobalState}>
             {children}
         </GlobalContext.Provider>

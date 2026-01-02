@@ -36,7 +36,7 @@ export const WeatherData: React.FC = () => {
     const dropMenuIcon = useRef<HTMLDivElement>(null);
     const daysDrop = useRef<HTMLDivElement>(null);
     const { temperature, feelsLike, humidity, wind, precipitation, locationName, locationCountry, currWeatherCode, is_day, hourlyData, dailyData, isLoading, unitChanged } = useGlobal();
-    const { setIsLoading, displayedDay, displayedDate, setDisplayedDay, setDisplayedDate, isImperial, locationTimezone, forecastDataLoaded, setforecastDataLoaded, aqiData } = useGlobal();
+    const { setIsLoading, displayedDay, displayedDate, setDisplayedDay, setDisplayedDate, isImperial, locationTimezone, forecastDataLoaded, setforecastDataLoaded, aqiData, PM10, PM2_5, dust } = useGlobal();
     const [daysDropVisible, setDaysDropVisible] = useState<boolean>(false);
     const [aqiStatus, setAqiStatus] = useState<string>("n/a");
     const [aqiColorCode, setAqiColorCode] = useState<string>("#9E9E9E");
@@ -168,7 +168,7 @@ export const WeatherData: React.FC = () => {
             setDummyDays(forecastDays);
         }
 
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 6; i++) {
             const index = nextHourIndex + i;
             if (hourlyData?.time && index < hourlyData.time.length) {
                 const weatherCode = hourlyData.iconCode?.[index] ?? 999;
@@ -471,8 +471,20 @@ export const WeatherData: React.FC = () => {
                     <ShowLoading />
                     <div className='aqi-container'>
                         <div className="child-aqi-container">
-                            <div className="aqi-lable dm-sans-500">Air Qualtiy</div>
-                            <div className="aqi-stat dm-sans-600" style={{ color: aqiColorCode }}>{aqiStatus}</div>
+                            <div className="aqi-label dm-sans-500">
+                                <span>Air Quality Index</span>
+                                <span>Condition</span>
+                                <span>Particulate Matter PM<sub>10</sub></span>
+                                <span>Particulate Matter PM<sub>2.5</sub></span>
+                                <span>Dust</span>
+                            </div>
+                            <div className="aqi-stat dm-sans-600">
+                                <span>{aqiData > -1 ? aqiData : 'null'}</span>
+                                <span style={{ color: aqiColorCode }}>{aqiStatus}</span>
+                                <span>{PM10} <span>μg/m³</span></span>
+                                <span>{PM2_5} <span>μg/m³</span></span>
+                                <span>{dust} <span>μg/m³</span></span>
+                            </div>
                         </div>
                     </div>
                     <div className="weather-data hourly-forecast">
