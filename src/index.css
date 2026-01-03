@@ -563,6 +563,7 @@ body {
   flex-wrap: wrap;
   gap: 20px;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-1,
 #app #appComponents .compartment-2 #weatherContainer .weather-components-parent .weather-component-2 {

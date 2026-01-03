@@ -234,7 +234,7 @@ export const WeatherData: React.FC = () => {
     useEffect(() => {
         if (aqiData === -2) {
             setAqiStatus("Error");
-            setAqiColorCode("#D32F2F");
+            setAqiColorCode("#C5172E");
         } else if (aqiData === -1) {
             setAqiStatus("No Data");
             setAqiColorCode("#9E9E9E");
@@ -243,13 +243,13 @@ export const WeatherData: React.FC = () => {
             setAqiColorCode("#00E400");
         } else if (aqiData <= 100) {
             setAqiStatus("Moderate");
-            setAqiColorCode("#FFFF00");
+            setAqiColorCode("#ECEDB0");
         } else if (aqiData <= 150) {
             setAqiStatus("Cautionary");
             setAqiColorCode("#FF7E00");
         } else if (aqiData <= 200) {
             setAqiStatus("Unhealthy");
-            setAqiColorCode("#FF0000");
+            setAqiColorCode("#C5172E");
         } else if (aqiData <= 300) {
             setAqiStatus("Very Unhealthy");
             setAqiColorCode("#8F3F97");
@@ -364,7 +364,7 @@ export const WeatherData: React.FC = () => {
             }
 
             const dummyHourlyData: HourlyForecast[] = [];
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 6; i++) {
                 const index = dayStartIndex + i;
                 if (hourlyData?.time && index < hourlyData.time.length) {
                     const weatherCode = hourlyData.iconCode?.[index] ?? 999;
