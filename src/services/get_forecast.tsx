@@ -26,7 +26,7 @@ async function getWeatherForecast({longitude, latitude, timezone}: LocationParam
         const response = await axios.request(options);
         const req_succeeded = response.status >= 200 && response.status < 300;
         if (req_succeeded) {
-            console.log(response.data);
+            // console.log(response.data);
             return {status: req_succeeded, resp: response.data};
         }
         return {status: req_succeeded, statusCode: response.status, resp: response.statusText}

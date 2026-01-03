@@ -5,7 +5,6 @@ import Aurora from './components/aurora';
 import { WeatherData } from './components/weather_data';
 
 function App() {
-
   return (
     <>
       <Aurora

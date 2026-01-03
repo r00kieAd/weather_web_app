@@ -14,7 +14,7 @@ type Place = {
     country: string
     latitude: number
     longitude: number
-    is_day: number
+    timezone: string
 }
 
 type SearchBoxProps = {
@@ -22,7 +22,7 @@ type SearchBoxProps = {
 }
 
 export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
-    const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude, setIsLoading, locationTimezone, setDailyData } = useGlobal();
+    const { setLocationId, setLocationName, setLocationCountry, setLocationLattitude, setLocationLongitude, setIsLoading, setLocationTimezone, locationTimezone, setDailyData } = useGlobal();
     const { setTemperature, setFeelsLike, setHumidity, setWind, setPrecipitation, setCurrWeatherCode, setIsDay, setforecastDataLoaded, isLoading } = useGlobal();
     const { setHourlyData, setAqiData, setPM10, setPM2_5, setDust } = useGlobal();
     const [query, setQuery] = useState('')
@@ -31,7 +31,6 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
     const [showSuggestions, setShowSuggestions] = useState(false)
     const [highlight, setHighlight] = useState<number>(-1)
     const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
-
     const debounceRef = useRef<number | null>(null)
     const wrapperRef = useRef<HTMLDivElement | null>(null)
     const inputRef = useRef<HTMLInputElement | null>(null)
@@ -100,6 +99,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
                         country: item.country,
                         latitude: item.latitude,
                         longitude: item.longitude,
+                        timezone: item.timezone
                     }))
                     setSuggestions(places)
                     setHighlight(-1)
@@ -126,7 +126,9 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
         setLocationCountry(place.country)
         setLocationLattitude(place.latitude)
         setLocationLongitude(place.longitude)
+        setLocationTimezone(place.timezone);
         if (onSearch) onSearch(place);
+        console.log("place data:", place);
         weatherForecast(place);
     }
 
