@@ -1,6 +1,6 @@
 <h1 style="font-size: 30px; display: flex; align-items: center; gap: 10px;">Weather Now <img src="public/favicon.png" alt="Weather App Logo" style="height: 30px; width: 30px; margin-top: 10px;"></h1>
 
-**Status: Work in Progress**
+**Status: Bug fixes and enhancements**
 
 A modern weather application built with React, TypeScript, and Vite. The app provides real-time weather information for any location, displaying current conditions, hourly forecasts, and comprehensive weather metrics. This project was taken from Frontend Mentor's [Weather App](https://www.frontendmentor.io/challenges/weather-app-K1FhddVm49) exercise, which I developed and modified.
 
